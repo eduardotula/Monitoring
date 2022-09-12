@@ -1,16 +1,17 @@
-package unip.com.inbound.dto;
+package unip.com.inbound.adapter.dto;
 
 import jdk.jfr.Timestamp;
 import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 
 @Data
 public class Co2DataDto {
 
     @NotNull(message = "epoch não encontrado!")
-    private Timestamp epoch;
+    private Instant epoch;
 
     @NotNull(message = "identifier não encontrado!")
     private Integer identifier;

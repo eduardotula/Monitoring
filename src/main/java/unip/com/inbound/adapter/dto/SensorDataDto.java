@@ -1,4 +1,4 @@
-package unip.com.inbound.dto;
+package unip.com.inbound.adapter.dto;
 
 import lombok.Data;
 
