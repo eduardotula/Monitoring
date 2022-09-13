@@ -18,6 +18,6 @@ public class Co2DataDto {
 
     @NotNull(message = "sensorData não encontrado!")
     @Valid
-    private SensorDataDto sensorDataDto;
+    private SensorDataDto sensorData;
 
 }

@@ -20,7 +20,9 @@ public class Esp32UseCase implements Esp32Port {
     }
 
     @Override
-    public Co2Data saveEsp32Data(Co2Data co2Data) {
+    public Co2Data saveCo2Data(Co2Data co2) {
         return null;
     }
+
+
 }

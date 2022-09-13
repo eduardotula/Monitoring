@@ -1,6 +1,6 @@
 package unip.com.domain.model;
 
-import jdk.jfr.Timestamp;
+
 import lombok.Data;
 
 import java.time.Instant;
@@ -10,6 +10,6 @@ public class Co2Data {
 
     private Instant epoch;
     private Integer identifier;
-    private SensorData sensor;
+    private SensorData sensorData;
 
 }

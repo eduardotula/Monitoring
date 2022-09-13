@@ -3,12 +3,13 @@ package unip.com.inbound.adapter.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 public class SensorDataDto {
 
     @NotNull(message = "erros não encontrado!")
-    private String[] erros;
+    private List<String> erros;
 
     @NotNull(message = "co2 não encontrado!")
     private Integer co2;
