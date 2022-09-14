@@ -9,7 +9,7 @@ import java.time.Instant;
 public class Co2Data {
 
     private Instant epoch;
-    private Integer identifier;
+    private Integer identificador;
     private SensorData sensorData;
 
 }

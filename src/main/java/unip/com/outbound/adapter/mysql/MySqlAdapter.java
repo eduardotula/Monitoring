@@ -20,4 +20,9 @@ public class MySqlAdapter implements Esp32DataPort {
         Co2DataEntity co2DataEntity = co2DataEntityMapper.co2Data2Co2DataEntity(co2Data);
         return co2DataEntityMapper.co2DataEntity2Co2Data(co2DataRepository.save(co2DataEntity));
     }
+
+    @Override
+    public Co2Data findById(String id) {
+        return co2DataEntityMapper.co2DataEntity2Co2Data(co2DataRepository.findById(id).get());
+    }
 }
