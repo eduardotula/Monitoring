@@ -32,10 +32,10 @@ public class Co2DataEntity {
     @Column(name = "tvoc", columnDefinition = "integer")
     private Integer tvoc;
 
-    @Column(name = "co2", columnDefinition = "decimal(18,2)")
+    @Column(name = "temperatura", columnDefinition = "decimal(18,2)")
     private Double temperatura;
 
-    @Column(name = "co2", columnDefinition = "integer")
+    @Column(name = "umidade", columnDefinition = "integer")
     private Integer umidade;
 
 }
