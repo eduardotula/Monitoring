@@ -1,15 +1,20 @@
 package unip.com.domain.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 @Data
 public class Co2Data {
 
-    private Instant epoch;
-    private Integer identificador;
+    private String id;
+    private Esp32 esp32;
+    private ZonedDateTime coleta;
     private SensorData sensorData;
 
 }

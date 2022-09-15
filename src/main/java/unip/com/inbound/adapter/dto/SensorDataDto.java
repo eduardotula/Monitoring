@@ -9,7 +9,7 @@ import java.util.List;
 public class SensorDataDto {
 
     @NotNull(message = "erros não encontrado!")
-    private List<String> erros;
+    private String erros;
 
     @NotNull(message = "co2 não encontrado!")
     private Integer co2;

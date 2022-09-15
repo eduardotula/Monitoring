@@ -1,7 +1,6 @@
 package unip.com.outbound.port;
 
 import unip.com.domain.model.Co2Data;
-import unip.com.outbound.adapter.mysql.dto.Co2DataEntity;
 
 public interface Esp32DataPort {
 

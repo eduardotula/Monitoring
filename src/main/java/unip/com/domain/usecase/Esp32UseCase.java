@@ -4,10 +4,12 @@ import unip.com.domain.model.Co2Data;
 import unip.com.inbound.port.Esp32Port;
 import unip.com.outbound.port.Esp32DataPort;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+@RequestScoped
 public class Esp32UseCase implements Esp32Port {
 
     @Inject
@@ -21,6 +23,7 @@ public class Esp32UseCase implements Esp32Port {
 
     @Override
     public Co2Data saveCo2Data(Co2Data co2) {
+        esp32DataPort.saveEsp32Data(co2);
         return null;
     }
 

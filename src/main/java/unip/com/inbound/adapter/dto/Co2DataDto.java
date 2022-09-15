@@ -6,15 +6,18 @@ import lombok.Data;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 @Data
 public class Co2DataDto {
 
+    private String id;
+
     @NotNull(message = "epoch não encontrado!")
-    private Instant epoch;
+    private ZonedDateTime coleta;
 
     @NotNull(message = "identifier não encontrado!")
-    private Integer identifier;
+    private Integer identificador;
 
     @NotNull(message = "sensorData não encontrado!")
     @Valid
