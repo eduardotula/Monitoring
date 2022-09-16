@@ -18,7 +18,6 @@ public class MonitoringUseCase implements MonitoringPort {
     @Inject
     Esp32DataAdapter esp32DataAdapter;
 
-    @Inject
     @Override
     public Esp32 createEsp32(Esp32 esp32) {
 

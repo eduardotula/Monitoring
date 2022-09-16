@@ -7,9 +7,11 @@ import unip.com.outbound.mapper.Esp32EntityMapper;
 import unip.com.outbound.port.MonitoringDataPort;
 import unip.com.outbound.repository.Esp32Repository;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Objects;
 
+@ApplicationScoped
 public class Esp32DataAdapter implements MonitoringDataPort {
 
     @Inject
