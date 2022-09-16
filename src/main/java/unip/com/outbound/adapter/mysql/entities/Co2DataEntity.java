@@ -1,11 +1,7 @@
 package unip.com.outbound.adapter.mysql.entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
@@ -19,14 +15,14 @@ public class Co2DataEntity {
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_esp32")
+    @JoinColumn(name = "co2_data_esp32_fk")
     private Esp32Entity esp32;
 
     @Column(name = "coleta")
     private ZonedDateTime coleta;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_sensorData")
+    @JoinColumn(name = "co2_data_sensor_data_fk", referencedColumnName = "id")
     private SensorDataEntity sensorData;
 
 }

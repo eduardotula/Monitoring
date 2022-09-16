@@ -1,0 +1,32 @@
+CREATE TABLE esp32(
+id CHAR(36) NOT NULL PRIMARY KEY,
+identificador VARCHAR(36) NOT NULL,
+nome_rua VARCHAR(50) NOT NULL,
+numero VARCHAR(10) NOT NULL,
+bairro VARCHAR(50) NOT NULL,
+cep CHAR(10) NOT NULL,
+estado VARCHAR(20) NOT NULL,
+latitude DECIMAL NOT NULL,
+longitude DECIMAL NOT NULL,
+altura INT NOT NULL,
+criado_em DATETIME NOT NULL
+);
+
+CREATE TABLE sensor_data(
+id CHAR(36) NOT NULL PRIMARY KEY,
+erros VARCHAR(256) NOT NULL,
+co2 INT NOT NULL,
+tvoc INT NOT NULL,
+temperatura DECIMAL(5,2),
+umidade INT NOT NULL
+);
+
+CREATE TABLE co2_data(
+id CHAR(36) NOT NULL PRIMARY KEY,
+id_esp32 CHAR(36) NOT NULL,
+id_sensor_data CHAR(36) NOT NULL,
+coleta DATETIME NOT NULL,
+CONSTRAINT co2_data_sensor_data_dk FOREIGN KEY (id_sensor_data) REFERENCES sensor_data(id),
+CONSTRAINT co2_data_esp32_fk FOREIGN KEY (id_esp32) REFERENCES esp32(id)
+);
+

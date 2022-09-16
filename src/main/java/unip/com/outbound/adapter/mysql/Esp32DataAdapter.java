@@ -1,30 +1,39 @@
 package unip.com.outbound.adapter.mysql;
 
-import unip.com.domain.model.Co2Data;
-import unip.com.outbound.adapter.mysql.entities.Co2DataEntity;
-import unip.com.outbound.mapper.Co2DataEntityMapper;
-import unip.com.outbound.port.Esp32DataPort;
-import unip.com.outbound.repository.Co2DataRepository;
+import unip.com.domain.model.Esp32;
+import unip.com.inbound.port.MonitoringPort;
+import unip.com.outbound.adapter.mysql.entities.Esp32Entity;
+import unip.com.outbound.mapper.Esp32EntityMapper;
+import unip.com.outbound.port.MonitoringDataPort;
+import unip.com.outbound.repository.Esp32Repository;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Objects;
 
-@ApplicationScoped
-public class Esp32DataAdapter implements Esp32DataPort {
+public class Esp32DataAdapter implements MonitoringDataPort {
 
     @Inject
-    Co2DataRepository co2DataRepository;
+    Esp32Repository esp32Repository;
     @Inject
-    Co2DataEntityMapper co2DataEntityMapper;
+    Esp32EntityMapper esp32EntityMapper;
 
     @Override
-    public Co2Data saveEsp32Data(Co2Data co2Data) {
-        Co2DataEntity co2DataEntity = co2DataEntityMapper.toEntity(co2Data);
-        return co2DataEntityMapper.toModel(co2DataRepository.save(co2DataEntity));
+    public Esp32 createEsp32(Esp32 esp32) {
+        Esp32Entity esp32Entity = esp32EntityMapper.toEntity(esp32);
+        return esp32EntityMapper.toModel(esp32Repository.save(esp32Entity));
     }
 
     @Override
-    public Co2Data findById(String id) {
-        return co2DataEntityMapper.toModel(co2DataRepository.findById(id).get());
+    public Esp32 findEsp32ById(String id) {
+        Esp32Entity esp32Entity = esp32Repository.findById(id).get();
+        if(Objects.isNull(esp32Entity)) return null;
+        return esp32EntityMapper.toModel(esp32Entity);
+    }
+
+    @Override
+    public Esp32 findEsp32ByIdentificador(String identificador) {
+        Esp32Entity esp32Entity = esp32Repository.findByIdentificador(identificador);
+        if(Objects.isNull(esp32Entity)) return null;
+        return esp32EntityMapper.toModel(esp32Entity);
     }
 }
