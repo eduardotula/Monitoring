@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 @Data
 public class Co2Data {
 
-    private String id;
+    private Integer id;
     private Esp32 esp32;
     private ZonedDateTime coleta;
     private SensorData sensorData;

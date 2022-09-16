@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 @Data
 public class Esp32Dto {
 
-    private String id;
+    private Integer id;
 
     @NotNull(message = "identificador não encontrado")
     private String identificador;
@@ -37,10 +37,10 @@ public class Esp32Dto {
     private String pais;
 
     @NotNull(message = "latitude não encontrado")
-    private BigDecimal latitude;
+    private String latitude;
 
     @NotNull(message = "longitude não encontrado")
-    private BigDecimal longitude;
+    private String longitude;
 
     @NotNull(message = "altura não encontrado")
     private Integer altura;

@@ -8,7 +8,9 @@ import unip.com.outbound.port.Co2DataDataPort;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import java.time.ZonedDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @RequestScoped
 public class MonitoringUseCase implements MonitoringPort {
@@ -25,6 +27,7 @@ public class MonitoringUseCase implements MonitoringPort {
         if(Objects.nonNull(esp32R)){
             throw new IllegalArgumentException("Esp32 Já registrado com identificador");
         }
+        esp32.setCriadoEm(ZonedDateTime.now());
         return esp32DataAdapter.createEsp32(esp32);
     }
 }

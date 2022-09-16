@@ -8,7 +8,6 @@ import java.util.List;
 @Data
 public class SensorDataDto {
 
-    @NotNull(message = "erros não encontrado!")
     private String erros;
 
     @NotNull(message = "co2 não encontrado!")
@@ -20,6 +19,6 @@ public class SensorDataDto {
     @NotNull(message = "temperatura não encontrada!")
     private Double temperatura;
 
-    @NotNull(message = "temperatura não encontrada!")
+    @NotNull(message = "umidade não encontrada!")
     private Integer umidade;
 }

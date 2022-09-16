@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class SensorData {
 
-    private String id;
-    private Co2Data co2Data;
+    private Integer id;
     private String erros;
     private Integer co2;
     private Integer tvoc;

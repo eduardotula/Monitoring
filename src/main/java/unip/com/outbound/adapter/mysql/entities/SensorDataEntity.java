@@ -1,10 +1,6 @@
 package unip.com.outbound.adapter.mysql.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Data
@@ -13,11 +9,9 @@ import javax.persistence.*;
 public class SensorDataEntity {
 
     @Id
-    @Column(name = "id", columnDefinition = "char", length = 36)
-    private String id;
-
-    @OneToOne(mappedBy = "sensorData")
-    private Co2DataEntity co2Data;
+    @Column(name = "id", columnDefinition = "INTEGER")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "erros")
     private String erros;

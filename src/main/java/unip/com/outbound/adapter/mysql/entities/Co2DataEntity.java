@@ -10,19 +10,20 @@ import java.time.ZonedDateTime;
 @Table(name = "co2_data")
 public class Co2DataEntity {
 
-    @Column(name = "id", columnDefinition = "char", length = 36)
+    @Column(name = "id", columnDefinition = "INTEGER")
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "co2_data_esp32_fk")
+    @JoinColumn(name = "id_esp32", referencedColumnName = "id")
     private Esp32Entity esp32;
 
     @Column(name = "coleta")
     private ZonedDateTime coleta;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "co2_data_sensor_data_fk", referencedColumnName = "id")
+    @JoinColumn(name = "id_sensor_data", referencedColumnName = "id")
     private SensorDataEntity sensorData;
 
 }

@@ -26,7 +26,7 @@ public class Esp32DataAdapter implements MonitoringDataPort {
     }
 
     @Override
-    public Esp32 findEsp32ById(String id) {
+    public Esp32 findEsp32ById(Integer id) {
         Esp32Entity esp32Entity = esp32Repository.findById(id).get();
         if(Objects.isNull(esp32Entity)) return null;
         return esp32EntityMapper.toModel(esp32Entity);

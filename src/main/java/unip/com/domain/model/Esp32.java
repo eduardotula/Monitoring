@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class Esp32 {
 
-    private String id;
+    private Integer id;
     private String identificador;
     private String nomeRua;
     private String numero;
@@ -21,8 +21,8 @@ public class Esp32 {
     private String cep;
     private String estado;
     private String pais;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
+    private String latitude;
+    private String longitude;
     private Integer altura;
     private ZonedDateTime criadoEm;
 

@@ -31,7 +31,7 @@ public class Esp32RestAdapter {
     @POST
     public Co2DataDto createCo2Data(Co2DataDto co2DataDto) {
         Co2Data co2Data = co2DataDtoMapper.co2DataDto2Co2Data(co2DataDto);
-        Co2DataDto co2DataDto1 = co2DataDtoMapper.co2Data2Co2DataDto(esp32Port.saveCo2Data(co2Data));
+        Co2DataDto co2DataDto1 = co2DataDtoMapper.co2Data2Co2DataDto(esp32Port.saveCo2Data(co2Data, co2DataDto.getEpoch()));
         return co2DataDto1;
     }
 

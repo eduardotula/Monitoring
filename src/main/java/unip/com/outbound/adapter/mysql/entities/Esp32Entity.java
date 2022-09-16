@@ -4,19 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 @Data
 @Entity(name = "esp32")
 @Table(name = "esp32")
-public class Esp32Entity {
+public class Esp32Entity implements Serializable {
 
     @Id
-    @Column(name = "id", columnDefinition = "char", length = 36)
-    private String id;
+    @Column(name = "id", columnDefinition = "INTEGER")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     //TODO colocar char e lengh do identificador
     @Column(name = "identificador")
@@ -43,11 +47,11 @@ public class Esp32Entity {
     @Column(name = "pais")
     private String pais;
 
-    @Column(name = "latitude", columnDefinition = "decimal(6,8)")
-    private BigDecimal latitude;
+    @Column(name = "latitude")
+    private String latitude;
 
-    @Column(name = "longitude", columnDefinition = "decimal(6,8)")
-    private BigDecimal longitude;
+    @Column(name = "longitude")
+    private String longitude;
 
     @Column(name = "altura")
     private Integer altura;
@@ -55,7 +59,7 @@ public class Esp32Entity {
     @Column(name = "criado_em")
     private ZonedDateTime criadoEm;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "esp32")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "esp32", cascade = CascadeType.PERSIST)
     private List<Co2DataEntity> co2Data;
 
 }

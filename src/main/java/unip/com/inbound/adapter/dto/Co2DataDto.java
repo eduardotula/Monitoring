@@ -11,10 +11,10 @@ import java.time.ZonedDateTime;
 @Data
 public class Co2DataDto {
 
-    private String id;
+    private Integer id;
 
     @NotNull(message = "epoch não encontrado!")
-    private ZonedDateTime coleta;
+    private Integer epoch;
 
     @NotNull(message = "identifier não encontrado!")
     private Integer identificador;
