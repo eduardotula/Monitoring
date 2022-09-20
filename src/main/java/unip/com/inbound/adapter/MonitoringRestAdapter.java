@@ -31,8 +31,9 @@ public class MonitoringRestAdapter {
     @Path("/co2data")
     @POST
     public Esp32Dto consultarCo2PorEnderecoData(Co2DataRequestEnderecoDto co2DataRequestEnderecoDto){
-        Esp32 esp32 = esp32DtoMapper.toModel(co2DataRequestEnderecoDto);
-        return esp32DtoMapper.toDto(monitoringPort.createEsp32(esp32));
+        //return esp32DtoMapper.toDto(monitoringPort.createEsp32(esp32));
+
+        return null;
     }
 
 
