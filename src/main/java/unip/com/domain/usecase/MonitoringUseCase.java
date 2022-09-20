@@ -30,4 +30,6 @@ public class MonitoringUseCase implements MonitoringPort {
         esp32.setCriadoEm(ZonedDateTime.now());
         return esp32DataAdapter.createEsp32(esp32);
     }
+
+
 }
