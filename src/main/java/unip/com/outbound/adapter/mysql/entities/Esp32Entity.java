@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GeneratorType;
+import org.jboss.resteasy.spi.touri.MappedBy;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -58,8 +59,5 @@ public class Esp32Entity implements Serializable {
 
     @Column(name = "criado_em")
     private ZonedDateTime criadoEm;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "esp32", cascade = CascadeType.PERSIST)
-    private List<Co2DataEntity> co2Data;
 
 }

@@ -26,5 +26,4 @@ public class Esp32 {
     private Integer altura;
     private ZonedDateTime criadoEm;
 
-    private List<Co2Data> co2Data;
 }
