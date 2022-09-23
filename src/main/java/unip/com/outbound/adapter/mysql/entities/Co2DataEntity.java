@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 @Data
-@Entity(name = "co2_data")
+@Entity(name = "co2Data")
 @Table(name = "co2_data")
 public class Co2DataEntity {
 

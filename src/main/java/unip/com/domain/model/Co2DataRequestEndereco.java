@@ -1,10 +1,14 @@
 package unip.com.domain.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
+@AllArgsConstructor
 public class Co2DataRequestEndereco {
 
     private String pais;
@@ -15,7 +19,7 @@ public class Co2DataRequestEndereco {
 
     private String bairro;
 
-    private LocalDate dataInicial;
+    private ZonedDateTime dataInicial;
 
-    private LocalDate dataFinal;
+    private ZonedDateTime dataFinal;
 }

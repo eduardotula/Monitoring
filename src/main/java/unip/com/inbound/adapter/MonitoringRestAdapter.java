@@ -1,25 +1,38 @@
 package unip.com.inbound.adapter;
 
+import unip.com.domain.model.Co2DataRequestEndereco;
 import unip.com.domain.model.Esp32;
+import unip.com.inbound.adapter.dto.Co2DataDto;
 import unip.com.inbound.adapter.dto.Esp32Dto;
-import unip.com.inbound.adapter.dto.consulta.Co2DataRequestEnderecoDto;
+import unip.com.inbound.adapter.mappers.Co2DataDtoMapper;
 import unip.com.inbound.adapter.mappers.Esp32DtoMapper;
 import unip.com.inbound.port.MonitoringPort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.validation.Valid;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Path("/monitoring")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class MonitoringRestAdapter {
 
     @Inject
     Esp32DtoMapper esp32DtoMapper;
     @Inject
     MonitoringPort monitoringPort;
+    @Inject
+    Co2DataDtoMapper co2DataDtoMapper;
 
     @Path("/esp32")
     @POST
@@ -29,11 +42,25 @@ public class MonitoringRestAdapter {
     }
 
     @Path("/co2data")
-    @POST
-    public Esp32Dto consultarCo2PorEnderecoData(Co2DataRequestEnderecoDto co2DataRequestEnderecoDto){
-        //return esp32DtoMapper.toDto(monitoringPort.createEsp32(esp32));
-
-        return null;
+    @GET
+    public List<Co2DataDto> consultarCo2PorEnderecoData(@QueryParam("pais")@NotNull String pais,
+                                                        @QueryParam("cidade") String cidade,
+                                                        @QueryParam("municipio") String municipio,
+                                                        @QueryParam("bairro") String bairro,
+                                                        @QueryParam("data_inicial") @NotNull String dataInicial,
+                                                        @QueryParam("data_final")@NotNull String dataFinal){
+        ZonedDateTime dataIni;
+        ZonedDateTime dataFin;
+        try{
+            dataFin = ZonedDateTime.of(LocalDateTime.parse(dataFinal), ZoneId.systemDefault());
+            dataIni = ZonedDateTime.of(LocalDateTime.parse(dataInicial), ZoneId.systemDefault());
+        }catch (Exception e){
+            throw new IllegalArgumentException("Data inicial ou data final não esta em padrão valido");
+        }
+        Co2DataRequestEndereco co2DataRequestEndereco = new Co2DataRequestEndereco(
+                pais, cidade, municipio, bairro, dataIni, dataFin);
+        return monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco).stream().map(co2DataDtoMapper::co2Data2Co2DataDto)
+                .collect(Collectors.toList());
     }
 
 
