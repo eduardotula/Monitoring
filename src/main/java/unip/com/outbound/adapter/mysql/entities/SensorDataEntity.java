@@ -1,9 +1,13 @@
 package unip.com.outbound.adapter.mysql.entities;
 
-import lombok.Data;
+import lombok.*;
+
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "sensorData")
 @Table(name = "sensor_data")
 public class SensorDataEntity {

@@ -15,8 +15,6 @@ public class Co2DataRequestEndereco {
 
     private String cidade;
 
-    private String municipio;
-
     private String bairro;
 
     private ZonedDateTime dataInicial;

@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Data
 public class Esp32Dto {
@@ -46,4 +47,6 @@ public class Esp32Dto {
     private Integer altura;
 
     private ZonedDateTime criadoEm;
+
+    List<Esp32ConfigParamsDto> configParams;
 }

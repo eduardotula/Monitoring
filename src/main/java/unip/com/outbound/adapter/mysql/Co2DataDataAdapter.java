@@ -36,10 +36,7 @@ public class Co2DataDataAdapter implements Co2DataDataPort {
     SensorDataEntityMapper sensorDataEntityMapper;
     @Inject
     Co2DataEntityMapper co2DataEntityMapper;
-    @Inject
-    Esp32Repository esp32Repository;
-    @Inject
-    Esp32EntityMapper esp32EntityMapper;
+
 
     @Override
     public Co2Data saveCo2Data(Co2Data co2Data) {
@@ -55,8 +52,21 @@ public class Co2DataDataAdapter implements Co2DataDataPort {
 
     @Override
     public List<Co2Data> buscarPorEndereco(Co2DataRequestEndereco co2DataRequestEndereco) {
-        Stream<Co2DataEntity> list = co2DataRepository.findByEsp32(co2DataRequestEndereco.getPais(),
-                co2DataRequestEndereco.getCidade(), co2DataRequestEndereco.getDataInicial(), co2DataRequestEndereco.getDataFinal());
+        Stream<Co2DataEntity> list;
+
+        if(Objects.nonNull(co2DataRequestEndereco.getCidade())){
+            list = co2DataRepository.findByEsp32Cidade(co2DataRequestEndereco.getPais(), co2DataRequestEndereco.getCidade(), co2DataRequestEndereco.getDataInicial(),
+                    co2DataRequestEndereco.getDataFinal());
+
+        } else if (Objects.nonNull(co2DataRequestEndereco.getBairro())) {
+            list = co2DataRepository.findByEsp32CidadeBairro(co2DataRequestEndereco.getPais(),
+                    co2DataRequestEndereco.getCidade(), co2DataRequestEndereco.getBairro(),
+                    co2DataRequestEndereco.getDataInicial(), co2DataRequestEndereco.getDataFinal());
+
+        }else{
+            list = co2DataRepository.findByEsp32Pais(co2DataRequestEndereco.getPais(), co2DataRequestEndereco.getDataInicial(),
+                    co2DataRequestEndereco.getDataFinal());
+        }
 
         return list.map(co2DataEntityMapper::toModel).collect(Collectors.toList());
     }

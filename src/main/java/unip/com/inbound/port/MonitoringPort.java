@@ -4,6 +4,7 @@ import unip.com.domain.model.Co2Data;
 import unip.com.domain.model.Co2DataRequestEndereco;
 import unip.com.domain.model.Esp32;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface MonitoringPort {

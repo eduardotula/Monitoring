@@ -1,9 +1,6 @@
 package unip.com.outbound.adapter.mysql.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GeneratorType;
 import org.jboss.resteasy.spi.touri.MappedBy;
 
@@ -12,8 +9,14 @@ import javax.validation.constraints.Digits;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
-@Data
+import java.util.Objects;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "esp32")
 @Table(name = "esp32")
 public class Esp32Entity implements Serializable {
@@ -23,8 +26,7 @@ public class Esp32Entity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    //TODO colocar char e lengh do identificador
-    @Column(name = "identificador")
+    @Column(name = "identificador", length = 15, columnDefinition = "CHAR")
     private String identificador;
 
     @Column(name = "nome_rua")
@@ -60,4 +62,12 @@ public class Esp32Entity implements Serializable {
     @Column(name = "criado_em")
     private ZonedDateTime criadoEm;
 
+    @OneToMany(mappedBy = "esp32", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Esp32ConfigParamsEntity> configParams;
+
+    public void addConfig(Esp32ConfigParamsEntity esp32ConfigParamsEntity){
+        if(Objects.isNull(configParams)) configParams = new ArrayList<>();
+        configParams.add(esp32ConfigParamsEntity);
+        esp32ConfigParamsEntity.setEsp32(this);
+    }
 }

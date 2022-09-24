@@ -1,28 +1,43 @@
 package unip.com.outbound.adapter.mysql;
 
 import unip.com.domain.model.Esp32;
-import unip.com.inbound.port.MonitoringPort;
+import unip.com.domain.model.Esp32ConfigParams;
 import unip.com.outbound.adapter.mysql.entities.Esp32Entity;
+import unip.com.outbound.mapper.Esp32ConfigparamsEntityMapper;
 import unip.com.outbound.mapper.Esp32EntityMapper;
 import unip.com.outbound.port.MonitoringDataPort;
+import unip.com.outbound.repository.Esp32ConfigRepository;
 import unip.com.outbound.repository.Esp32Repository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
-public class Esp32DataAdapter implements MonitoringDataPort {
+public class MonitoringDataAdapter implements MonitoringDataPort {
 
     @Inject
     Esp32Repository esp32Repository;
     @Inject
     Esp32EntityMapper esp32EntityMapper;
+    @Inject
+    Esp32ConfigRepository esp32ConfigRepository;
+    @Inject
+    Esp32ConfigparamsEntityMapper esp32ConfigparamsEntityMapper;
 
     @Override
-    public Esp32 createEsp32(Esp32 esp32) {
+    public Esp32 save(Esp32 esp32) {
         Esp32Entity esp32Entity = esp32EntityMapper.toEntity(esp32);
-        return esp32EntityMapper.toModel(esp32Repository.save(esp32Entity));
+        var c = esp32Entity.getConfigParams();
+        esp32Entity.setConfigParams(null);
+
+        c.forEach(esp32ConfigParamsEntity -> esp32Entity.addConfig(esp32ConfigParamsEntity));
+
+        esp32Repository.save(esp32Entity);
+
+        return esp32EntityMapper.toModel(esp32Entity);
     }
 
     @Override
@@ -38,4 +53,11 @@ public class Esp32DataAdapter implements MonitoringDataPort {
         if(Objects.isNull(esp32Entity)) return null;
         return esp32EntityMapper.toModel(esp32Entity);
     }
+
+    @Override
+    public List<Esp32ConfigParams> findEsp32WithConfigActive(String identificador){
+        return esp32ConfigRepository.findByIdentificadorConfigParamsActive(identificador, true).stream().map(esp32ConfigparamsEntityMapper::toModel).collect(Collectors.toList());
+    }
+
+
 }

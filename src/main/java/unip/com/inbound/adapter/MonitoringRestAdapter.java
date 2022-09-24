@@ -2,6 +2,7 @@ package unip.com.inbound.adapter;
 
 import unip.com.domain.model.Co2DataRequestEndereco;
 import unip.com.domain.model.Esp32;
+import unip.com.domain.model.Esp32ConfigParams;
 import unip.com.inbound.adapter.dto.Co2DataDto;
 import unip.com.inbound.adapter.dto.Esp32Dto;
 import unip.com.inbound.adapter.mappers.Co2DataDtoMapper;
@@ -45,7 +46,6 @@ public class MonitoringRestAdapter {
     @GET
     public List<Co2DataDto> consultarCo2PorEnderecoData(@QueryParam("pais")@NotNull String pais,
                                                         @QueryParam("cidade") String cidade,
-                                                        @QueryParam("municipio") String municipio,
                                                         @QueryParam("bairro") String bairro,
                                                         @QueryParam("data_inicial") @NotNull String dataInicial,
                                                         @QueryParam("data_final")@NotNull String dataFinal){
@@ -58,7 +58,7 @@ public class MonitoringRestAdapter {
             throw new IllegalArgumentException("Data inicial ou data final não esta em padrão valido");
         }
         Co2DataRequestEndereco co2DataRequestEndereco = new Co2DataRequestEndereco(
-                pais, cidade, municipio, bairro, dataIni, dataFin);
+                pais, cidade, bairro, dataIni, dataFin);
         return monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco).stream().map(co2DataDtoMapper::co2Data2Co2DataDto)
                 .collect(Collectors.toList());
     }

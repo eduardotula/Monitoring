@@ -1,6 +1,6 @@
 CREATE TABLE esp32(
 id INT PRIMARY KEY AUTO_INCREMENT,
-identificador VARCHAR(36) NOT NULL,
+identificador CHAR(15) NOT NULL,
 nome_rua VARCHAR(500) NOT NULL,
 numero VARCHAR(10) NOT NULL,
 bairro VARCHAR(100) NOT NULL,
@@ -28,7 +28,16 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 id_esp32 INT NOT NULL,
 id_sensor_data INT NOT NULL,
 coleta DATETIME NOT NULL,
-CONSTRAINT co2_data_sensor_data_dk FOREIGN KEY (id_sensor_data) REFERENCES sensor_data(id),
+CONSTRAINT co2_data_sensor_data_fk FOREIGN KEY (id_sensor_data) REFERENCES sensor_data(id),
 CONSTRAINT co2_data_esp32_fk FOREIGN KEY (id_esp32) REFERENCES esp32(id)
+);
+
+CREATE TABLE esp32_config_params(
+id INT PRIMARY KEY AUTO_INCREMENT,
+id_esp32 INT NOT NULL,
+param VARCHAR(50) NOT NULL,
+value VARCHAR(50) NOT NULL,
+active BOOLEAN,
+CONSTRAINT esp32_config_params_esp32_fk FOREIGN KEY (id_esp32) REFERENCES esp32(id)
 );
 
