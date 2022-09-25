@@ -49,4 +49,5 @@ public class Esp32RestAdapter {
     public List<Esp32ConfigParamsDto> getConfigParamsActive(@QueryParam("identificador") @NotNull String identificador){
         return esp32Port.getConfigParamsActive(identificador).stream().map(esp32ConfigparamsDtoMapper::toDto).collect(Collectors.toList());
     }
+
 }

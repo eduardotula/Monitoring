@@ -35,9 +35,9 @@ public class MonitoringDataAdapter implements MonitoringDataPort {
 
         c.forEach(esp32ConfigParamsEntity -> esp32Entity.addConfig(esp32ConfigParamsEntity));
 
-        esp32Repository.save(esp32Entity);
+        Esp32Entity finalEnti = esp32Repository.save(esp32Entity);
 
-        return esp32EntityMapper.toModel(esp32Entity);
+        return esp32EntityMapper.toModel(finalEnti);
     }
 
     @Override

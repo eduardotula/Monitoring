@@ -10,6 +10,7 @@ import java.util.List;
 public interface MonitoringPort {
 
     Esp32 createEsp32(Esp32 esp32);
+    Esp32 updateEsp32(Esp32 esp32);
     List<Co2Data> consultarCo2PorEnderecoData(Co2DataRequestEndereco co2DataRequestEndereco);
 
 }

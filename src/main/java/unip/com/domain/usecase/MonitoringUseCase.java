@@ -6,6 +6,7 @@ import unip.com.domain.model.Esp32;
 import unip.com.inbound.port.MonitoringPort;
 import unip.com.outbound.adapter.mysql.MonitoringDataAdapter;
 import unip.com.outbound.port.Co2DataDataPort;
+import unip.com.outbound.port.MonitoringDataPort;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -20,19 +21,32 @@ public class MonitoringUseCase implements MonitoringPort {
     @Inject
     Co2DataDataPort co2DataDataPort;
     @Inject
-    MonitoringDataAdapter monitoringDataAdapter;
+    MonitoringDataPort monitoringDataPort;
 
     @Override
     @Transactional
     public Esp32 createEsp32(Esp32 esp32) {
-        Esp32 esp32R = monitoringDataAdapter.findEsp32ByIdentificador(esp32.getIdentificador());
+        Esp32 esp32R = monitoringDataPort.findEsp32ByIdentificador(esp32.getIdentificador());
         if(Objects.nonNull(esp32R)){
             throw new IllegalArgumentException("Esp32 Já registrado com identificador");
         }
 
         esp32.generateDefaultConfigParams();
         esp32.setCriadoEm(ZonedDateTime.now());
-        return monitoringDataAdapter.save(esp32);
+        return monitoringDataPort.save(esp32);
+    }
+
+    @Override
+    public Esp32 updateEsp32(Esp32 esp32) {
+        Esp32 esp32R = monitoringDataPort.findEsp32ByIdentificador(esp32.getIdentificador());
+
+        if(Objects.isNull(esp32)){
+            throw new IllegalArgumentException("Esp32 não encontrado com identificador");
+        }
+        esp32.setId(esp32R.getId());
+        esp32.setCriadoEm(esp32R.getCriadoEm());
+        esp32.getConfigParams().forEach(c -> c.setActive(true));
+        return monitoringDataPort.save(esp32);
     }
 
 
