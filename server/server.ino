@@ -47,7 +47,7 @@ void setup() {
 
 //Loop de coleta, armazenagem e envio de dados
 void loop(){
-  sendStoredData();
+  //sendStoredData();
   String body;
   DynamicJsonDocument requestBody(1024);
   requestBody.garbageCollect();
@@ -57,10 +57,10 @@ void loop(){
   JsonObject sensorData = requestBody.createNestedObject("sensorData");
   sensors.getCo2DataFromSensors(sensorData, 10, 5000);
   sensors.getTempUmidadeFromSensors(sensorData);
-  
+
   serializeJson(requestBody, body);
   int response = utils.sendDataRequest(body);
-  if(!response) sdCard.saveDataToSd(body);
+  //if(!response) sdCard.saveDataToSd(body);
   Serial.println(body);
   delay(delaySendData);
 }
@@ -77,7 +77,7 @@ void sendStoredData(){
 //Task comunicar parametros com API
 void taskcommandListnerApi(void*){
   while(1){
-    
+
     vTaskDelay(delayReciveLog);
   }
  vTaskDelete(NULL);
