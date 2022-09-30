@@ -1,14 +1,18 @@
 package unip.com.inbound.adapter.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Esp32Dto {
 
     private Integer id;
@@ -45,6 +49,9 @@ public class Esp32Dto {
 
     @NotNull(message = "altura não encontrado")
     private Integer altura;
+
+    @NotNull(message = "proxima Manutenção não encontrado")
+    private LocalDate proximaManutencao;
 
     private ZonedDateTime criadoEm;
 

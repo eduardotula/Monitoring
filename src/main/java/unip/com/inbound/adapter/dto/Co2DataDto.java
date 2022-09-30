@@ -1,14 +1,18 @@
 package unip.com.inbound.adapter.dto;
 
 import jdk.jfr.Timestamp;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.List;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Co2DataDto {
 
     private Integer id;
@@ -22,5 +26,7 @@ public class Co2DataDto {
     @NotNull(message = "sensorData não encontrado!")
     @Valid
     private SensorDataDto sensorData;
+
+    private List<Integer> rawCo2Data;
 
 }

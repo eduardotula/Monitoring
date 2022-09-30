@@ -1,17 +1,18 @@
 package unip.com.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Esp32 {
 
     private Integer id;
@@ -27,6 +28,8 @@ public class Esp32 {
     private String longitude;
     private Integer altura;
     private ZonedDateTime criadoEm;
+    private LocalDate proximaManutencao;
+
     private List<Esp32ConfigParams> configParams;
 
     public void generateDefaultConfigParams(){

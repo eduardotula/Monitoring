@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 @Mapper(componentModel = "cdi")
 public interface Co2DataDtoMapper {
@@ -25,6 +26,7 @@ public interface Co2DataDtoMapper {
     }
 
     default Integer toEpoch(ZonedDateTime coleta){
+        if(Objects.isNull(coleta)) return null;
         return Math.toIntExact(coleta.toEpochSecond());
     }
 

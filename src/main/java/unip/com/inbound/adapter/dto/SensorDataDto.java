@@ -4,13 +4,16 @@ import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class SensorDataDto {
 
     private String erros;
@@ -33,11 +36,11 @@ public class SensorDataDto {
         if(Objects.nonNull(erros)){
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
-                erros = objectMapper.writeValueAsString(erros);
+                this.erros = objectMapper.writeValueAsString(erros);
             } catch (Exception e) {
-                erros = null;
+                this.erros = null;
             }
-        }else erros = null;
+        }else this.erros = null;
 
     }
 }

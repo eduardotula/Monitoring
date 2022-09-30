@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,9 @@ public class Esp32Entity implements Serializable {
 
     @Column(name = "criado_em")
     private ZonedDateTime criadoEm;
+
+    @Column(name = "proxima_manutencao")
+    private LocalDate proximaManutencao;
 
     @OneToMany(mappedBy = "esp32", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Esp32ConfigParamsEntity> configParams;

@@ -42,8 +42,16 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-container-image-docker</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-h2</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -74,7 +82,6 @@
       <version>1.4.200</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
@@ -100,7 +107,6 @@
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
@@ -127,7 +133,6 @@
       <artifactId>jedis</artifactId>
       <version>3.3.0</version>
     </dependency>
-
     <dependency>
       <groupId>com.squareup.okhttp3</groupId>
       <artifactId>okhttp</artifactId>
@@ -150,6 +155,11 @@
       <groupId>org.webjars</groupId>
       <artifactId>json-stringify-safe</artifactId>
       <version>5.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.workday</groupId>
+      <artifactId>timeseries-forecast</artifactId>
+      <version>1.1.1</version>
     </dependency>
   </dependencies>
   <build>

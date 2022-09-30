@@ -1,11 +1,14 @@
 package unip.com.inbound.adapter.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Esp32ConfigParamsDto {
 
     private Integer id;

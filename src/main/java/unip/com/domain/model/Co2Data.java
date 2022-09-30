@@ -1,20 +1,23 @@
 package unip.com.domain.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Co2Data {
 
     private Integer id;
     private Esp32 esp32;
     private ZonedDateTime coleta;
     private SensorData sensorData;
+    private List<Integer> rawCo2Data = new ArrayList<>();
 
 }

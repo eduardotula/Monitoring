@@ -1,0 +1,1 @@
+ALTER TABLE esp32 add proxima_manutencao DATETIME NOT NULL;

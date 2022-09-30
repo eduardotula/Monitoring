@@ -1,17 +1,19 @@
 package unip.com.domain.usecase;
 
+import com.workday.insights.timeseries.arima.Arima;
 import unip.com.domain.model.Co2Data;
 import unip.com.domain.model.Co2DataRequestEndereco;
 import unip.com.domain.model.Esp32;
 import unip.com.inbound.port.MonitoringPort;
-import unip.com.outbound.adapter.mysql.MonitoringDataAdapter;
 import unip.com.outbound.port.Co2DataDataPort;
 import unip.com.outbound.port.MonitoringDataPort;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,9 +51,8 @@ public class MonitoringUseCase implements MonitoringPort {
         return monitoringDataPort.save(esp32);
     }
 
-
     @Override
-    public List<Co2Data> consultarCo2PorEnderecoData(Co2DataRequestEndereco co2DataRequestEndereco) {
+    public List<Co2Data> consultarCo2PorEnderecoData(Co2DataRequestEndereco co2DataRequestEndereco, boolean raw) {
 
         if(Objects.isNull(co2DataRequestEndereco.getCidade())  && Objects.nonNull(co2DataRequestEndereco.getBairro())){
             throw new IllegalArgumentException("Não é possível realizar busca: bairro informado mas cidade não informado");
@@ -63,10 +64,28 @@ public class MonitoringUseCase implements MonitoringPort {
             throw new IllegalArgumentException("Nenhum dado encontrado com parametros");
         }
 
+        if(raw){
+            Co2Data rawCo2Data = new Co2Data();
+            co2Data.stream().forEach(co2Data1 -> rawCo2Data.getRawCo2Data().add(co2Data1.getSensorData().getCo2()));
+            return Arrays.asList(rawCo2Data);
+        }
+
         return co2Data;
     }
 
+    @Override
+    public List<Esp32> consultarEsp32sParaProximaManutencao(){
+        var dataPrevista = LocalDate.now();
+        List<Esp32> esp32s = monitoringDataPort.listarEsp32sParaProximaManutencao(dataPrevista);
 
+        if(Objects.isNull(esp32s) || esp32s.isEmpty()){
+            throw new IllegalArgumentException("Nenhum dado encontrado com parametros");
+        }
+        return esp32s;
+    }
 
+    @Override
+    public void timeSeriesForecast(){
+    }
 
 }

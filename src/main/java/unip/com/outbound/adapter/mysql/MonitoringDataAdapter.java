@@ -11,6 +11,7 @@ import unip.com.outbound.repository.Esp32Repository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.time.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -56,8 +57,13 @@ public class MonitoringDataAdapter implements MonitoringDataPort {
 
     @Override
     public List<Esp32ConfigParams> findEsp32WithConfigActive(String identificador){
-        return esp32ConfigRepository.findByIdentificadorConfigParamsActive(identificador, true).stream().map(esp32ConfigparamsEntityMapper::toModel).collect(Collectors.toList());
+        return esp32ConfigRepository.findByIdentificadorConfigParamsActive(identificador, true).stream()
+                .map(esp32ConfigparamsEntityMapper::toModel).collect(Collectors.toList());
     }
 
-
+    @Override
+    public List<Esp32> listarEsp32sParaProximaManutencao(LocalDate diasAntesManutecao){
+        return esp32Repository.listarEsp32sComManutencao(diasAntesManutecao).stream()
+                .map(esp32EntityMapper::toModel).collect(Collectors.toList());
+    }
 }
