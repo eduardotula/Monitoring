@@ -11,7 +11,7 @@ pais VARCHAR(50) NOT NULL,
 latitude VARCHAR(20) NOT NULL,
 longitude VARCHAR(20) NOT NULL,
 altura INT NOT NULL,
-criado_em DATETIME NOT NULL
+criado_em TIMESTAMP NOT NULL
 );
 
 CREATE TABLE sensor_data(
@@ -27,7 +27,7 @@ CREATE TABLE co2_data(
 id SERIAL PRIMARY KEY NOT NULL,
 id_esp32 INT NOT NULL,
 id_sensor_data INT NOT NULL,
-coleta DATETIME NOT NULL,
+coleta TIMESTAMP NOT NULL,
 CONSTRAINT co2_data_sensor_data_fk FOREIGN KEY (id_sensor_data) REFERENCES sensor_data(id),
 CONSTRAINT co2_data_esp32_fk FOREIGN KEY (id_esp32) REFERENCES esp32(id)
 );
