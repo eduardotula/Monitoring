@@ -59,8 +59,7 @@ public class MonitoringRestAdapter {
                                                         @QueryParam("cidade") String cidade,
                                                         @QueryParam("bairro") String bairro,
                                                         @QueryParam("data_inicial") @NotNull String dataInicial,
-                                                        @QueryParam("data_final")@NotNull String dataFinal,
-                                                        @QueryParam("raw") boolean raw){
+                                                        @QueryParam("data_final")@NotNull String dataFinal){
         ZonedDateTime dataIni;
         ZonedDateTime dataFin;
         try{
@@ -71,7 +70,7 @@ public class MonitoringRestAdapter {
         }
         Co2DataRequestEndereco co2DataRequestEndereco = new Co2DataRequestEndereco(
                 pais, cidade, bairro, dataIni, dataFin);
-        return monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco, raw).stream().map(co2DataDtoMapper::co2Data2Co2DataDto)
+        return monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco).stream().map(co2DataDtoMapper::co2Data2Co2DataDto)
                 .collect(Collectors.toList());
     }
 
@@ -94,7 +93,7 @@ public class MonitoringRestAdapter {
         Co2DataRequestEndereco co2DataRequestEndereco = new Co2DataRequestEndereco(
                 pais, cidade, bairro, dataIni, dataFin);
         StringBuilder builder = new StringBuilder();
-        monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco, false).stream().forEach(co2Data ->  {
+        monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco).stream().forEach(co2Data ->  {
             String data = String.format("%d,%s\n", co2Data.getSensorData().getCo2(), co2Data.getColeta().toLocalDateTime().toString());
             builder.append(data);
         });

@@ -3,6 +3,7 @@ package unip.com.domain.usecase;
 import unip.com.domain.model.Co2Data;
 import unip.com.domain.model.Esp32;
 import unip.com.domain.model.Esp32ConfigParams;
+import unip.com.domain.scripts.PopulateDatabase;
 import unip.com.inbound.port.Esp32Port;
 import unip.com.outbound.adapter.mysql.MonitoringDataAdapter;
 import unip.com.outbound.port.Co2DataDataPort;
@@ -21,6 +22,8 @@ public class Esp32UseCase implements Esp32Port {
     Co2DataDataPort co2DataDataPort;
     @Inject
     MonitoringDataAdapter monitoringDataAdapter;
+    @Inject
+    PopulateDatabase populateDatabase;
 
     @Override
     public String now() {

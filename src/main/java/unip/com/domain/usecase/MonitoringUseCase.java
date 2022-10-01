@@ -55,7 +55,7 @@ public class MonitoringUseCase implements MonitoringPort {
     }
 
     @Override
-    public List<Co2Data> consultarCo2PorEnderecoData(Co2DataRequestEndereco co2DataRequestEndereco, boolean raw) {
+    public List<Co2Data> consultarCo2PorEnderecoData(Co2DataRequestEndereco co2DataRequestEndereco) {
 
         if(Objects.isNull(co2DataRequestEndereco.getCidade())  && Objects.nonNull(co2DataRequestEndereco.getBairro())){
             throw new IllegalArgumentException("Não é possível realizar busca: bairro informado mas cidade não informado");
@@ -65,12 +65,6 @@ public class MonitoringUseCase implements MonitoringPort {
 
         if(Objects.isNull(co2Data) || co2Data.isEmpty()){
             throw new IllegalArgumentException("Nenhum dado encontrado com parametros");
-        }
-
-        if(raw){
-            Co2Data rawCo2Data = new Co2Data();
-            co2Data.stream().forEach(co2Data1 -> rawCo2Data.getRawCo2Data().add(co2Data1.getSensorData().getCo2()));
-            return Arrays.asList(rawCo2Data);
         }
 
         return co2Data;

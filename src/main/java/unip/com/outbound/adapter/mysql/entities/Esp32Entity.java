@@ -27,7 +27,7 @@ public class Esp32Entity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "identificador", length = 15, columnDefinition = "CHAR")
+    @Column(name = "identificador", length = 10, columnDefinition = "CHAR")
     private String identificador;
 
     @Column(name = "nome_rua")

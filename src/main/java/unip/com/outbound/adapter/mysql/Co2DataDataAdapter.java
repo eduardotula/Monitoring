@@ -55,14 +55,14 @@ public class Co2DataDataAdapter implements Co2DataDataPort {
     public List<Co2Data> buscarPorEndereco(Co2DataRequestEndereco co2DataRequestEndereco) {
         Stream<Co2DataEntity> list;
 
-        if(Objects.nonNull(co2DataRequestEndereco.getCidade())){
-            list = co2DataRepository.findByEsp32Cidade(co2DataRequestEndereco.getPais(), co2DataRequestEndereco.getCidade(), co2DataRequestEndereco.getDataInicial(),
-                    co2DataRequestEndereco.getDataFinal());
-
-        } else if (Objects.nonNull(co2DataRequestEndereco.getBairro())) {
+        if(Objects.nonNull(co2DataRequestEndereco.getBairro())){
             list = co2DataRepository.findByEsp32CidadeBairro(co2DataRequestEndereco.getPais(),
                     co2DataRequestEndereco.getCidade(), co2DataRequestEndereco.getBairro(),
                     co2DataRequestEndereco.getDataInicial(), co2DataRequestEndereco.getDataFinal());
+
+        } else if (Objects.nonNull(co2DataRequestEndereco.getCidade())) {
+            list = co2DataRepository.findByEsp32Cidade(co2DataRequestEndereco.getPais(), co2DataRequestEndereco.getCidade(), co2DataRequestEndereco.getDataInicial(),
+                    co2DataRequestEndereco.getDataFinal());
 
         }else{
             list = co2DataRepository.findByEsp32Pais(co2DataRequestEndereco.getPais(), co2DataRequestEndereco.getDataInicial(),
