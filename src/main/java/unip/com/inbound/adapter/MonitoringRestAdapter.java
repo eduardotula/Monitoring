@@ -1,8 +1,12 @@
 package unip.com.inbound.adapter;
 
+import com.workday.insights.timeseries.arima.ArimaSolver;
+import com.workday.insights.timeseries.arima.struct.ArimaParams;
 import unip.com.domain.model.Co2DataRequestEndereco;
 import unip.com.domain.model.Esp32;
 import unip.com.domain.model.Esp32ConfigParams;
+import unip.com.inbound.adapter.dto.ArimaForecastRequest;
+import unip.com.inbound.adapter.dto.ArimaForecastResponse;
 import unip.com.inbound.adapter.dto.Co2DataDto;
 import unip.com.inbound.adapter.dto.Esp32Dto;
 import unip.com.inbound.adapter.mappers.Co2DataDtoMapper;
@@ -101,6 +105,14 @@ public class MonitoringRestAdapter {
     @GET
     public List<Esp32Dto> consultarEsp32sParaProximaManutencao(){
         return monitoringPort.consultarEsp32sParaProximaManutencao().stream().map(esp32DtoMapper::toDto).collect(Collectors.toList());
+    }
+
+    @Path("/co2data/arima")
+    @POST
+    public ArimaForecastResponse arimaForecast(@Valid ArimaForecastRequest arima){
+        ArimaParams arimaParams = new ArimaParams(arima.getNp(), arima.getNd(), arima.getNq(), arima.getSp(),
+                arima.getSd(), arima.getSq(), arima.getM());
+        return monitoringPort.timeSeriesForecast(arimaParams, arima.getTamanhoPredicao(), arima.getData());
     }
 
 

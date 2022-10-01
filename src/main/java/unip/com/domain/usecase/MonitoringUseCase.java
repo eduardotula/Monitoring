@@ -1,9 +1,12 @@
 package unip.com.domain.usecase;
 
 import com.workday.insights.timeseries.arima.Arima;
+import com.workday.insights.timeseries.arima.struct.ArimaParams;
+import com.workday.insights.timeseries.arima.struct.ForecastResult;
 import unip.com.domain.model.Co2Data;
 import unip.com.domain.model.Co2DataRequestEndereco;
 import unip.com.domain.model.Esp32;
+import unip.com.inbound.adapter.dto.ArimaForecastResponse;
 import unip.com.inbound.port.MonitoringPort;
 import unip.com.outbound.port.Co2DataDataPort;
 import unip.com.outbound.port.MonitoringDataPort;
@@ -85,7 +88,17 @@ public class MonitoringUseCase implements MonitoringPort {
     }
 
     @Override
-    public void timeSeriesForecast(){
+    public ArimaForecastResponse timeSeriesForecast(ArimaParams arimaParams, int tamanhoPredicao, double[] data){
+        ForecastResult result = Arima.forecast_arima(data, tamanhoPredicao, arimaParams);
+        double[] uppers = result.getForecastUpperConf();
+        double[] lowers = result.getForecastLowerConf();
+        double[] forecastResult = result.getForecast();
+        double rmse = result.getRMSE();
+        double maxNormalizedVariance = result.getMaxNormalizedVariance();
+        String log = result.getLog();
+
+        return new ArimaForecastResponse(uppers, lowers,
+                forecastResult, rmse, maxNormalizedVariance, log);
     }
 
 }
