@@ -1,10 +1,8 @@
 package unip.com.inbound.adapter;
 
-import com.workday.insights.timeseries.arima.ArimaSolver;
 import com.workday.insights.timeseries.arima.struct.ArimaParams;
 import unip.com.domain.model.Co2DataRequestEndereco;
 import unip.com.domain.model.Esp32;
-import unip.com.domain.model.Esp32ConfigParams;
 import unip.com.inbound.adapter.dto.ArimaForecastRequest;
 import unip.com.inbound.adapter.dto.ArimaForecastResponse;
 import unip.com.inbound.adapter.dto.Co2DataDto;
@@ -19,7 +17,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

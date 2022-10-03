@@ -11,8 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ArimaForecastResponse {
 
-    private double[] uppers;
-    private double[] lowers;
     private double[] forecastResult;
     private double rmse;
     private double maxNormalizedVariance;

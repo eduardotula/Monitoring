@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,15 +83,12 @@ public class MonitoringUseCase implements MonitoringPort {
     @Override
     public ArimaForecastResponse timeSeriesForecast(ArimaParams arimaParams, int tamanhoPredicao, double[] data){
         ForecastResult result = Arima.forecast_arima(data, tamanhoPredicao, arimaParams);
-        double[] uppers = result.getForecastUpperConf();
-        double[] lowers = result.getForecastLowerConf();
         double[] forecastResult = result.getForecast();
         double rmse = result.getRMSE();
         double maxNormalizedVariance = result.getMaxNormalizedVariance();
         String log = result.getLog();
 
-        return new ArimaForecastResponse(uppers, lowers,
-                forecastResult, rmse, maxNormalizedVariance, log);
+        return new ArimaForecastResponse(forecastResult, rmse, maxNormalizedVariance, log);
     }
 
 }
