@@ -15,7 +15,7 @@ public class ZonedDateTimeBr implements ZonedDateTimeBrPort {
 
     @Override
     public ZoneId getZoneId(){
-        return ZoneId.of("-03:00");
+        return ZoneId.of(ZoneId.SHORT_IDS.get("BET"));
     }
 
 }
