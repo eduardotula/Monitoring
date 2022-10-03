@@ -53,14 +53,10 @@ COPY --chown=1001 target/quarkus-app/quarkus/ /deployments/quarkus/
 EXPOSE 8080
 USER 1001
 
+ARG DATABASE_UR
 
-ARG DB_HEROKU_SPLIT
-ARG DATABASE_URL
-ARG DB_ECHO_VALUES="true"
-ENV DB_HEROKU_SPL=$DB_HEROKU_SPLIT
-ENV DATABASE_UR=$DATABASE_URL
 
-RUN ls / && echo "teste"
+
 COPY --chown=1001 heroku.sh /deployments/heroku.sh
 
 
