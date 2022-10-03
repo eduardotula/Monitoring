@@ -7,6 +7,8 @@ import unip.com.domain.scripts.PopulateDatabase;
 import unip.com.inbound.port.Esp32Port;
 import unip.com.outbound.adapter.mysql.MonitoringDataAdapter;
 import unip.com.outbound.port.Co2DataDataPort;
+import unip.com.outbound.port.ZonedDateTimeBrPort;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -24,10 +26,12 @@ public class Esp32UseCase implements Esp32Port {
     MonitoringDataAdapter monitoringDataAdapter;
     @Inject
     PopulateDatabase populateDatabase;
+    @Inject
+    ZonedDateTimeBrPort zonedDateTimeBrPort;
 
     @Override
     public String now() {
-        long epochSeconds = LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond();
+        long epochSeconds = LocalDateTime.now().atZone(zonedDateTimeBrPort.getZoneId()).toEpochSecond();
         return Long.toString(epochSeconds);
     }
 

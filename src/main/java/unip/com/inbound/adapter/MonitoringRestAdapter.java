@@ -10,6 +10,7 @@ import unip.com.inbound.adapter.dto.Esp32Dto;
 import unip.com.inbound.adapter.mappers.Co2DataDtoMapper;
 import unip.com.inbound.adapter.mappers.Esp32DtoMapper;
 import unip.com.inbound.port.MonitoringPort;
+import unip.com.outbound.port.ZonedDateTimeBrPort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -35,6 +36,8 @@ public class MonitoringRestAdapter {
     MonitoringPort monitoringPort;
     @Inject
     Co2DataDtoMapper co2DataDtoMapper;
+    @Inject
+    ZonedDateTimeBrPort zonedDateTimeBrPort;
 
     @Path("/esp32")
     @POST
@@ -60,8 +63,8 @@ public class MonitoringRestAdapter {
         ZonedDateTime dataIni;
         ZonedDateTime dataFin;
         try{
-            dataFin = ZonedDateTime.of(LocalDateTime.parse(dataFinal), ZoneId.systemDefault());
-            dataIni = ZonedDateTime.of(LocalDateTime.parse(dataInicial), ZoneId.systemDefault());
+            dataFin = ZonedDateTime.of(LocalDateTime.parse(dataFinal), zonedDateTimeBrPort.getZoneId());
+            dataIni = ZonedDateTime.of(LocalDateTime.parse(dataInicial), zonedDateTimeBrPort.getZoneId());
         }catch (Exception e){
             throw new IllegalArgumentException("Data inicial ou data final não esta em padrão valido");
         }
@@ -82,8 +85,8 @@ public class MonitoringRestAdapter {
         ZonedDateTime dataIni;
         ZonedDateTime dataFin;
         try{
-            dataFin = ZonedDateTime.of(LocalDateTime.parse(dataFinal), ZoneId.systemDefault());
-            dataIni = ZonedDateTime.of(LocalDateTime.parse(dataInicial), ZoneId.systemDefault());
+            dataFin = ZonedDateTime.of(LocalDateTime.parse(dataFinal), zonedDateTimeBrPort.getZoneId());
+            dataIni = ZonedDateTime.of(LocalDateTime.parse(dataInicial), zonedDateTimeBrPort.getZoneId());
         }catch (Exception e){
             throw new IllegalArgumentException("Data inicial ou data final não esta em padrão valido");
         }

@@ -8,6 +8,7 @@ import unip.com.domain.usecase.Esp32UseCase;
 import unip.com.inbound.port.Esp32Port;
 import unip.com.outbound.adapter.mysql.MonitoringDataAdapter;
 import unip.com.outbound.port.Co2DataDataPort;
+import unip.com.outbound.port.ZonedDateTimeBrPort;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -22,6 +23,8 @@ public class PopulateDatabase {
     Esp32Port esp32Port;
     @Inject
     MonitoringDataAdapter monitoringDataAdapter;
+    @Inject
+    ZonedDateTimeBrPort zonedDateTimeBrPort;
 
     public void populateDatabaseFromUCICo() {
         try {
@@ -37,7 +40,7 @@ public class PopulateDatabase {
 
                     var time = LocalTime.parse(splitLine[1].replace(".", ":"));
                     var date = LocalDate.parse(splitLine[0], formatter);
-                    var coleta = ZonedDateTime.of(date, time, ZoneId.systemDefault());
+                    var coleta = ZonedDateTime.of(date, time, zonedDateTimeBrPort.getZoneId());
                     SensorData sensorData = SensorData.builder().co2(Integer.parseInt(splitLine[3]))
                             .temperatura(Double.parseDouble(splitLine[12].replace(",", ".")))
                             .umidade((int) Double.parseDouble(splitLine[13].replace(",", ".")))

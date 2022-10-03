@@ -4,7 +4,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import unip.com.domain.model.Co2Data;
 import unip.com.inbound.adapter.dto.Co2DataDto;
+import unip.com.outbound.port.ZonedDateTimeBrPort;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -12,7 +15,9 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 
 @Mapper(componentModel = "cdi")
+@ApplicationScoped
 public interface Co2DataDtoMapper {
+
 
     @Mapping(source = "esp32.identificador", target = "identificador")
     @Mapping(source = "coleta", target = "epoch")
@@ -22,7 +27,7 @@ public interface Co2DataDtoMapper {
     Co2Data co2DataDto2Co2Data(Co2DataDto co2DataDto);
 
     default ZonedDateTime toZoned(Integer epoch){
-        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(epoch), ZoneId.systemDefault());
+        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(epoch), ZoneId.of("BET"));
     }
 
     default Integer toEpoch(ZonedDateTime coleta){
