@@ -27,7 +27,7 @@ public interface Co2DataDtoMapper {
     Co2Data co2DataDto2Co2Data(Co2DataDto co2DataDto);
 
     default ZonedDateTime toZoned(Integer epoch){
-        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(epoch), ZoneId.of("BET"));
+        return ZonedDateTime.ofInstant(Instant.ofEpochSecond(epoch), ZoneId.of("-03"));
     }
 
     default Integer toEpoch(ZonedDateTime coleta){

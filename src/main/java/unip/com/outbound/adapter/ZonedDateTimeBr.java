@@ -10,12 +10,12 @@ import java.time.ZonedDateTime;
 public class ZonedDateTimeBr implements ZonedDateTimeBrPort {
     @Override
     public ZonedDateTime now() {
-        return ZonedDateTime.now(ZoneId.of("BET"));
+        return ZonedDateTime.now(getZoneId());
     }
 
     @Override
     public ZoneId getZoneId(){
-        return ZoneId.of("BET");
+        return ZoneId.of("-03");
     }
 
 }
