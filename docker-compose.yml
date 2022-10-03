@@ -2,11 +2,10 @@ version: "3.8"
 
 services:
 
-  heroku-quarkus:
-    env_file:
-      ./db.env
-    container_name: heroku-quarkus
-    image: heroku/quarkus-jvm:1.0
+  monitoring:
+
+    container_name: monitoring
+    image: monitoring-jvm:1.0
     build:
       context: ./
       dockerfile: ./src/main/docker/Dockerfile.jvm

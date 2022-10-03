@@ -55,9 +55,6 @@ public class Esp32UseCase implements Esp32Port {
         Esp32 esp32 = monitoringDataAdapter.findEsp32ByIdentificador(identificador);
         if(Objects.isNull(esp32)) throw new IllegalArgumentException("Esp32 não encontrado");
 
-        esp32.getConfigParams().forEach(e -> e.setActive(false));
-        monitoringDataAdapter.save(esp32);
-
         return config;
     }
 
