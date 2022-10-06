@@ -15,7 +15,7 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
     public Response toResponse(Exception e) {
         JsonObject responseBody = new JsonObject();
         JsonObject element = new JsonObject();
-        responseBody.add("Requisição inválida", element);
+        responseBody.add("Requisição_inválida", element);
         element.addProperty("mensagem", e.getMessage());
         Response response = Response.status(HttpResponseStatus.BAD_REQUEST.code()).type(MediaType.APPLICATION_JSON)
                 .entity(responseBody.toString())

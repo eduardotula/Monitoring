@@ -55,7 +55,7 @@ public class MonitoringRestAdapter {
 
     @Path("/co2data")
     @GET
-    public List<Co2DataDto> consultarCo2PorEnderecoData(@QueryParam("pais")@NotNull String pais,
+    public List<Co2DataDto> consultarCo2PorEnderecoData(@QueryParam("estado")@NotNull String estado,
                                                         @QueryParam("cidade") String cidade,
                                                         @QueryParam("bairro") String bairro,
                                                         @QueryParam("data_inicial") @NotNull String dataInicial,
@@ -69,7 +69,7 @@ public class MonitoringRestAdapter {
             throw new IllegalArgumentException("Data inicial ou data final não esta em padrão valido");
         }
         Co2DataRequestEndereco co2DataRequestEndereco = new Co2DataRequestEndereco(
-                pais, cidade, bairro, dataIni, dataFin);
+                estado, cidade, bairro, dataIni, dataFin);
         return monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco).stream().map(co2DataDtoMapper::co2Data2Co2DataDto)
                 .collect(Collectors.toList());
     }
@@ -77,7 +77,7 @@ public class MonitoringRestAdapter {
     @Path("/co2data/raw")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String consultarCo2PorEnderecoDataRawText(@QueryParam("pais")@NotNull String pais,
+    public String consultarCo2PorEnderecoDataRawText(@QueryParam("estado")@NotNull String estado,
                                                         @QueryParam("cidade") String cidade,
                                                         @QueryParam("bairro") String bairro,
                                                         @QueryParam("data_inicial") @NotNull String dataInicial,
@@ -91,7 +91,7 @@ public class MonitoringRestAdapter {
             throw new IllegalArgumentException("Data inicial ou data final não esta em padrão valido");
         }
         Co2DataRequestEndereco co2DataRequestEndereco = new Co2DataRequestEndereco(
-                pais, cidade, bairro, dataIni, dataFin);
+                estado, cidade, bairro, dataIni, dataFin);
         StringBuilder builder = new StringBuilder();
         monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco).stream().forEach(co2Data ->  {
             String data = String.format("%d,%s\n", co2Data.getSensorData().getCo2(), co2Data.getColeta().toLocalDateTime().toString());

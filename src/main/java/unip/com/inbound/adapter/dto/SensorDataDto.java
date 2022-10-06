@@ -14,6 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class SensorDataDto {
 
     private String erros;

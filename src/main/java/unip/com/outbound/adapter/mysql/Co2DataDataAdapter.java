@@ -2,25 +2,17 @@ package unip.com.outbound.adapter.mysql;
 
 import unip.com.domain.model.Co2Data;
 import unip.com.domain.model.Co2DataRequestEndereco;
-import unip.com.domain.model.Esp32;
 import unip.com.domain.model.SensorData;
 import unip.com.outbound.adapter.mysql.entities.Co2DataEntity;
-import unip.com.outbound.adapter.mysql.entities.Esp32Entity;
 import unip.com.outbound.adapter.mysql.entities.SensorDataEntity;
 import unip.com.outbound.mapper.Co2DataEntityMapper;
-import unip.com.outbound.mapper.Esp32EntityMapper;
 import unip.com.outbound.mapper.SensorDataEntityMapper;
 import unip.com.outbound.port.Co2DataDataPort;
 import unip.com.outbound.repository.Co2DataRepository;
-import unip.com.outbound.repository.Esp32Repository;
 import unip.com.outbound.repository.SensorDataRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -56,16 +48,16 @@ public class Co2DataDataAdapter implements Co2DataDataPort {
         Stream<Co2DataEntity> list;
 
         if(Objects.nonNull(co2DataRequestEndereco.getBairro())){
-            list = co2DataRepository.findByEsp32CidadeBairro(co2DataRequestEndereco.getPais(),
+            list = co2DataRepository.findByEsp32CidadeBairro(co2DataRequestEndereco.getEstado(),
                     co2DataRequestEndereco.getCidade(), co2DataRequestEndereco.getBairro(),
                     co2DataRequestEndereco.getDataInicial(), co2DataRequestEndereco.getDataFinal());
 
         } else if (Objects.nonNull(co2DataRequestEndereco.getCidade())) {
-            list = co2DataRepository.findByEsp32Cidade(co2DataRequestEndereco.getPais(), co2DataRequestEndereco.getCidade(), co2DataRequestEndereco.getDataInicial(),
+            list = co2DataRepository.findByEsp32Cidade(co2DataRequestEndereco.getEstado(), co2DataRequestEndereco.getCidade(), co2DataRequestEndereco.getDataInicial(),
                     co2DataRequestEndereco.getDataFinal());
 
         }else{
-            list = co2DataRepository.findByEsp32Pais(co2DataRequestEndereco.getPais(), co2DataRequestEndereco.getDataInicial(),
+            list = co2DataRepository.findByEsp32Estado(co2DataRequestEndereco.getEstado(), co2DataRequestEndereco.getDataInicial(),
                     co2DataRequestEndereco.getDataFinal());
         }
 

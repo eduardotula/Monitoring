@@ -10,9 +10,10 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Co2DataRequestEndereco {
 
-    private String pais;
+    private String estado;
 
     private String cidade;
 

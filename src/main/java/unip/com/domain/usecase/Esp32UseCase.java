@@ -5,15 +5,14 @@ import unip.com.domain.model.Esp32;
 import unip.com.domain.model.Esp32ConfigParams;
 import unip.com.domain.scripts.PopulateDatabase;
 import unip.com.inbound.port.Esp32Port;
-import unip.com.outbound.adapter.mysql.MonitoringDataAdapter;
 import unip.com.outbound.port.Co2DataDataPort;
+import unip.com.outbound.port.MonitoringDataPort;
 import unip.com.outbound.port.ZonedDateTimeBrPort;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +22,7 @@ public class Esp32UseCase implements Esp32Port {
     @Inject
     Co2DataDataPort co2DataDataPort;
     @Inject
-    MonitoringDataAdapter monitoringDataAdapter;
+    MonitoringDataPort monitoringDataPort;
     @Inject
     PopulateDatabase populateDatabase;
     @Inject
@@ -38,7 +37,7 @@ public class Esp32UseCase implements Esp32Port {
     @Override
     @Transactional
     public Co2Data saveCo2Data(Co2Data co2) {
-        Esp32 esp32 = monitoringDataAdapter.findEsp32ByIdentificador(co2.getEsp32().getIdentificador());
+        Esp32 esp32 = monitoringDataPort.findEsp32ByIdentificador(co2.getEsp32().getIdentificador());
         if(Objects.isNull(esp32)){
             throw new IllegalArgumentException("Esp32 não cadastrado");
         }
@@ -50,13 +49,13 @@ public class Esp32UseCase implements Esp32Port {
 
     @Override
     public List<Esp32ConfigParams> getConfigParamsActive(String identificador) {
-        var config = monitoringDataAdapter.findEsp32WithConfigActive(identificador);
+        var config = monitoringDataPort.findEsp32WithConfigActive(identificador);
 
         if(Objects.isNull(config) || config.isEmpty()){
             throw new IllegalArgumentException("Nenhuma configuração ativa encontrada");
         }
 
-        Esp32 esp32 = monitoringDataAdapter.findEsp32ByIdentificador(identificador);
+        Esp32 esp32 = monitoringDataPort.findEsp32ByIdentificador(identificador);
         if(Objects.isNull(esp32)) throw new IllegalArgumentException("Esp32 não encontrado");
 
         return config;
