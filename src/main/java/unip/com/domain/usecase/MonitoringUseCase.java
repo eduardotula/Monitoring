@@ -48,6 +48,7 @@ public class MonitoringUseCase implements MonitoringPort {
             throw new IllegalArgumentException("Esp32 não encontrado com identificador");
         }
         esp32.setId(esp32R.getId());
+        esp32.setCriadoEm(esp32R.getCriadoEm());
         esp32.getConfigParams().forEach(c -> c.setActive(true));
         return monitoringDataPort.save(esp32);
     }
