@@ -1,13 +1,18 @@
 package unip.com.outbound.adapter;
 
+import io.quarkus.runtime.StartupEvent;
 import unip.com.outbound.port.ZonedDateTimeBrPort;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.TimeZone;
 
 @ApplicationScoped
 public class ZonedDateTimeBr implements ZonedDateTimeBrPort {
+
     @Override
     public ZonedDateTime now() {
         return ZonedDateTime.now(getZoneId());
@@ -15,7 +20,7 @@ public class ZonedDateTimeBr implements ZonedDateTimeBrPort {
 
     @Override
     public ZoneId getZoneId(){
-        return ZoneId.of(ZoneId.SHORT_IDS.get("BET"));
+        return TimeZone.getTimeZone("UTC").toZoneId();
     }
 
 }

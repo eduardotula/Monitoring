@@ -13,6 +13,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,7 +33,7 @@ public class Esp32UseCase implements Esp32Port {
 
     @Override
     public String now() {
-        long epochSeconds = LocalDateTime.now().atZone(zonedDateTimeBrPort.getZoneId()).toEpochSecond();
+        long epochSeconds = zonedDateTimeBrPort.now().toEpochSecond();
         return Long.toString(epochSeconds);
     }
 
