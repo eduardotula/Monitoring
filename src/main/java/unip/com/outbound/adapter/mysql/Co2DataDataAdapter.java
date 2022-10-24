@@ -1,7 +1,7 @@
 package unip.com.outbound.adapter.mysql;
 
 import unip.com.domain.model.Co2Data;
-import unip.com.domain.model.Co2DataRequestEndereco;
+import unip.com.inbound.adapter.dto.Co2DataRequestEndereco;
 import unip.com.domain.model.SensorData;
 import unip.com.outbound.adapter.mysql.entities.Co2DataEntity;
 import unip.com.outbound.adapter.mysql.entities.SensorDataEntity;

@@ -1,4 +1,4 @@
-package unip.com.domain.model;
+package unip.com.inbound.adapter.dto;
 
 import lombok.*;
 

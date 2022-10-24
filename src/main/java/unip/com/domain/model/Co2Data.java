@@ -19,6 +19,5 @@ public class Co2Data {
     private Esp32 esp32;
     private ZonedDateTime coleta;
     private SensorData sensorData;
-    private List<Integer> rawCo2Data = new ArrayList<>();
 
 }

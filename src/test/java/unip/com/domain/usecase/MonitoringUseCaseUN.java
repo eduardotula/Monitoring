@@ -5,9 +5,8 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import org.junit.jupiter.api.Test;
 import unip.com.domain.model.Co2Data;
-import unip.com.domain.model.Co2DataRequestEndereco;
+import unip.com.inbound.adapter.dto.Co2DataRequestEndereco;
 import unip.com.domain.model.Esp32;
-import unip.com.domain.usecase.MonitoringUseCase;
 import unip.com.domain.usecase.factories.Co2DataFactory;
 import unip.com.domain.usecase.factories.Esp32Factory;
 import unip.com.inbound.adapter.dto.ArimaForecastResponse;
@@ -16,7 +15,6 @@ import unip.com.outbound.port.MonitoringDataPort;
 
 import javax.inject.Inject;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;

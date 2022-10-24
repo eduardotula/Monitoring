@@ -2,7 +2,7 @@ package unip.com.inbound.port;
 
 import com.workday.insights.timeseries.arima.struct.ArimaParams;
 import unip.com.domain.model.Co2Data;
-import unip.com.domain.model.Co2DataRequestEndereco;
+import unip.com.inbound.adapter.dto.Co2DataRequestEndereco;
 import unip.com.domain.model.Esp32;
 import unip.com.inbound.adapter.dto.ArimaForecastResponse;
 
