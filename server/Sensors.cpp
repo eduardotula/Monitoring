@@ -11,6 +11,11 @@ String Sensors::startSensors(){
     Serial.println("Sensor CSS811 Detectado");
     doc["CCS811"] = "Iniciado";
     ccs.setDriveMode(1);
+    if(!ignoreWarmupCC811){
+      Serial.println("Iniciando processo de calibração");
+      delay(1200000);
+    }else Serial.println("Calibração ignorado");
+    
   }else {
    
     Serial.println("Falha ao detectar sensor CCS811");
@@ -21,7 +26,7 @@ String Sensors::startSensors(){
     doc["AHT10"] = "Iniciado";
   }else{
     Serial.println("Falha ao detectar sensor AHT10");
-    doc["CCS811"] = "Falha ao detectar sensor AHT10";
+    doc["AHT10"] = "Falha ao detectar sensor AHT10";
   }
   String message;
   serializeJson(doc, message);
@@ -30,7 +35,7 @@ String Sensors::startSensors(){
 
   
 void Sensors::getCo2DataFromSensors(JsonObject sensorData, int ammount, int dela){
-  JsonObject errors = sensorData.createNestedObject("erros");
+  JsonObject errors = sensorData["erros"].as<JsonObject>();
   sensorData["co2"] = NULL;
   sensorData["tvoc"] = NULL;
   
@@ -38,10 +43,15 @@ void Sensors::getCo2DataFromSensors(JsonObject sensorData, int ammount, int dela
   uint16_t tvoc = 0;
   
   for(int i = 0; i<ammount;i++){
-    if(ccs.available() && !ccs.readData()){
-      co2 += ccs.geteCO2();
-      tvoc += ccs.getTVOC();
-    }else i = ammount;
+    if(ccs.available() && !ccs.readData() && ccs.geteCO2() != 0){
+       co2 += ccs.geteCO2();
+       Serial.print(ccs.geteCO2());
+       Serial.print("  ");
+       tvoc += ccs.getTVOC();
+      }else{
+        co2 = 0;
+        break;
+      }
     delay(dela);
   }
   
@@ -52,7 +62,7 @@ void Sensors::getCo2DataFromSensors(JsonObject sensorData, int ammount, int dela
 }
 
 void Sensors::getTempUmidadeFromSensors(JsonObject sensorData){
-  JsonObject errors = sensorData.createNestedObject("erros");
+  JsonObject errors = sensorData["erros"].as<JsonObject>();
   sensorData["temperatura"] = NULL;
   sensorData["umidade"] = NULL;
 

@@ -7,7 +7,7 @@ boolean NetworkUtils::sendDataRequest(String body){
   if(WiFi.status() != WL_CONNECTED) return false;
 
   HTTPClient http;
-  String serverPath = serverName + "/";
+  String serverPath = serverName + "/data";
 
   http.begin(serverPath);
   http.addHeader("Content-Type", "application/json");
@@ -17,8 +17,10 @@ boolean NetworkUtils::sendDataRequest(String body){
   int httpResponseCode = http.POST(body);
   
   if(httpResponseCode == 200){
+    Serial.println("Dados enviados");
     return true;
   }
+  Serial.println("Falha ao enviar dados");
   return false;
 }
 
@@ -33,23 +35,39 @@ int NetworkUtils::getDateTimeFromServer(){
     
   int httpResponseCode = http.GET();
 
-  Serial.println(httpResponseCode);
-  if(httpResponseCode>0){
+  if(httpResponseCode == 200){
     String payload = http.getString();
-    Serial.print("getDateTimeFromServer : ");
-    Serial.println(payload);
     return payload.toInt();
   }
-  
   return 0;
 }
 
-boolean NetworkUtils::connectWifi(char* ssid, char* pass){
+String NetworkUtils::getParamsFromServer(String mac){
+  if(WiFi.status() != WL_CONNECTED) return "";
+
+  HTTPClient http;
+  String serverPath = serverName + "/configParams?identificador=" + mac;
+  http.begin(serverPath);
+  int httpResponseCode = http.GET();
+
+    if(httpResponseCode == 200){
+    String payload = http.getString();
+    Serial.print("Response from params : ");
+    Serial.println(payload);
+    return payload;
+  }
+  return "";
+}
+
+boolean NetworkUtils::connectWifi(String ssid, String pass){
   if(WiFi.status() == WL_CONNECTED) WiFi.disconnect();
   delay(100);
-  Serial.println(ssid);
+  char ssidP[100];
+  char passP[100];
+  ssid.toCharArray(ssidP, 100);
+  pass.toCharArray(passP, 100);
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, pass);
+  WiFi.begin(ssidP, passP);
   delay(10000);  
   
   if(WiFi.status() == WL_CONNECTED){
