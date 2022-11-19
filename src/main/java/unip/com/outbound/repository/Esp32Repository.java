@@ -14,7 +14,6 @@ public interface Esp32Repository extends JpaRepository<Esp32Entity, Integer> {
 
     Esp32Entity findByIdentificador(String identificador);
 
-
     @Query("SELECT e FROM esp32 e WHERE e.proximaManutencao <= :antesProximaManu")
     List<Esp32Entity> listarEsp32sComManutencao(LocalDate antesProximaManu);
 }

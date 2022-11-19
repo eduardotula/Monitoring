@@ -54,6 +54,17 @@ public class MonitoringUseCase implements MonitoringPort {
     }
 
     @Override
+    public List<Esp32> listAllEsp32(){
+
+        List<Esp32> esps = monitoringDataPort.listAllEsp32();
+
+        if(esps.isEmpty()){
+            throw new IllegalArgumentException("Nenhuma unidade registrada");
+        }
+        return esps;
+    }
+
+    @Override
     public List<Co2Data> consultarCo2PorEnderecoData(Co2DataRequestEndereco co2DataRequestEndereco) {
 
         if(Objects.isNull(co2DataRequestEndereco.getCidade())  && Objects.nonNull(co2DataRequestEndereco.getBairro())){

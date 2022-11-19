@@ -13,6 +13,9 @@ public interface MonitoringDataPort {
     Esp32 findEsp32ById(Integer id);
 
     Esp32 findEsp32ByIdentificador(String id);
+
+    List<Esp32> listAllEsp32();
+
     List<Esp32ConfigParams> findEsp32WithConfigActive(String identificador);
 
     List<Esp32> listarEsp32sParaProximaManutencao(LocalDate diasAntesManutecao);

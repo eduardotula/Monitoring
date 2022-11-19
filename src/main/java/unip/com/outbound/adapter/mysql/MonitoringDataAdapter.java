@@ -56,6 +56,11 @@ public class MonitoringDataAdapter implements MonitoringDataPort {
     }
 
     @Override
+    public List<Esp32> listAllEsp32(){
+        return esp32Repository.findAll().stream().map(esp32EntityMapper::toModel).collect(Collectors.toList());
+    }
+
+    @Override
     public List<Esp32ConfigParams> findEsp32WithConfigActive(String identificador){
         return esp32ConfigRepository.findByIdentificadorConfigParamsActive(identificador, true).stream()
                 .map(esp32ConfigparamsEntityMapper::toModel).collect(Collectors.toList());

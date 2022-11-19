@@ -52,6 +52,12 @@ public class MonitoringRestAdapter {
         return esp32DtoMapper.toDto(monitoringPort.updateEsp32(esp32));
     }
 
+    @Path("/esp32")
+    @GET
+    public List<Esp32Dto> listAllEsp32(){
+        return monitoringPort.listAllEsp32().stream().map(esp32DtoMapper::toDto).collect(Collectors.toList());
+    }
+
     @Path("/co2data")
     @GET
     public List<Co2DataDto> consultarCo2PorEnderecoData(@QueryParam("estado")@NotNull String estado,
