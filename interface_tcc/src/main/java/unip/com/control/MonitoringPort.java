@@ -11,6 +11,7 @@ import unip.com.control.exceptions.RequestException;
 import unip.com.model.ArimaForecastRequest;
 import unip.com.model.ArimaForecastResponse;
 import unip.com.model.Co2DataDto;
+import unip.com.model.Esp32Dto;
 
 public class MonitoringPort {
 
@@ -40,5 +41,17 @@ public class MonitoringPort {
 		List<ArimaForecastResponse> re = (List<ArimaForecastResponse>) request.postRequest(new TypeReference<ArimaForecastResponse>() {}, null, "/monitoring/co2data/arima", arimaParams);
 		if(!re.isEmpty()) return re.get(0);
 		return null;
+	}
+	
+	public List<Esp32Dto> listAllEsp32() throws RequestException{
+		return (List<Esp32Dto>) request.getRequest(new TypeReference<List<Esp32Dto>>() {}, null, "/monitoring/esp32");
+	}
+	
+	public void registerNewEsp32(Esp32Dto esp32) throws RequestException {
+		request.postRequest(new TypeReference<Esp32Dto>() {}, null, "/monitoring/esp32", esp32);
+	}
+	
+	public void updateEsp32(Esp32Dto esp32) throws RequestException {
+		request.putRequest(new TypeReference<Esp32Dto>() {}, null, "/monitoring/esp32", esp32);
 	}
 }

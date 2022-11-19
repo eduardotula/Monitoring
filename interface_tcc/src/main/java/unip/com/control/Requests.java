@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -31,6 +32,7 @@ public class Requests {
 		this.baseUrl = baseUrl;
 		this.client = new OkHttpClient();
 		this.ob = new ObjectMapper();
+		this.ob.registerModule(new JavaTimeModule());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -111,6 +113,48 @@ public class Requests {
 		return responseObject;
 	}
 
+	
+	public List<?> putRequest(TypeReference targetClass, HashMap<String, String> params, String additionalPath, Object body) throws RequestException{
+		String url = baseUrl;
+		List<Object> responseObject = new ArrayList<>();
+		url += additionalPath;
+		
+		url = concatParams(url, params);
+		
+		try {
+			System.out.println(this.ob.writeValueAsString(body));
+			RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), this.ob.writeValueAsString(body));
+			Request request = new Request.Builder().url(url).post(requestBody).put(requestBody).build();
+			Call call = client.newCall(request);
+			Response response = call.execute();
+			
+			String respBody = response.body().string();
+			System.out.println(respBody);
+			
+			if(response.isSuccessful()) {
+				Object obje = this.ob.readValue(respBody, targetClass);
+				if(obje instanceof Collection) {
+					responseObject = (List<Object>) obje;
+				}else {
+					responseObject.add(obje);
+				}
+			}else {
+				throw new RequestException(String.format("Falha ao buscar dados: %s", respBody));
+			}
+			
+		} catch (StreamReadException e1) {
+			e1.printStackTrace();
+			throw new RequestException("Falha ao realizar mapeamento de entidade");
+		} catch (DatabindException e1) {
+			e1.printStackTrace();
+			throw new RequestException("Falha ao realizar mapeamento de entidade");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			throw new RequestException("Falha ao realizar requisição");
+		}
+		
+		return responseObject;
+	}
 	
 	private String concatParams(String url, HashMap<String, String> params) {
 		String localUrl = url;

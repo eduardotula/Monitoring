@@ -27,6 +27,7 @@ public class MainInterface extends BaseGUI{
 	private DefaultModels model;
 	private JButton btnBuscar;
 	private JButton btnArima;
+	private JButton btnUnidades;
 	
 	
 	public MainInterface() {
@@ -54,6 +55,9 @@ public class MainInterface extends BaseGUI{
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		menuBar.add(btnArima);
+		
+		btnUnidades = new JButton("Unidades");
+		menuBar.add(btnUnidades);
 		setVisible(true);
 		setLocationRelativeTo(null);
 	}
@@ -86,6 +90,10 @@ public class MainInterface extends BaseGUI{
 			}
 			
 			new ArimaRequest(dados.toArray(new Integer[dados.size()]));
+		});
+		
+		btnUnidades.addActionListener(e ->{
+			new Unidades();
 		});
 	}
 
