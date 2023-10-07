@@ -2,8 +2,6 @@ package unip.com.inbound.adapter.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @AllArgsConstructor
@@ -11,7 +9,7 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @Builder
-public class Co2DataRequestEndereco {
+public class DataRequestEndereco {
 
     private String estado;
 

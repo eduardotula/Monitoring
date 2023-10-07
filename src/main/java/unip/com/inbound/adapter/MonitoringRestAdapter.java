@@ -1,13 +1,13 @@
 package unip.com.inbound.adapter;
 
 import com.workday.insights.timeseries.arima.struct.ArimaParams;
-import unip.com.inbound.adapter.dto.Co2DataRequestEndereco;
+import unip.com.inbound.adapter.dto.DataRequestEndereco;
 import unip.com.domain.model.Esp32;
 import unip.com.inbound.adapter.dto.ArimaForecastRequest;
 import unip.com.inbound.adapter.dto.ArimaForecastResponse;
-import unip.com.inbound.adapter.dto.Co2DataDto;
+import unip.com.inbound.adapter.dto.DataDto;
 import unip.com.inbound.adapter.dto.Esp32Dto;
-import unip.com.inbound.adapter.mappers.Co2DataDtoMapper;
+import unip.com.inbound.adapter.mappers.DataDtoMapper;
 import unip.com.inbound.adapter.mappers.Esp32DtoMapper;
 import unip.com.inbound.port.MonitoringPort;
 import unip.com.outbound.port.ZonedDateTimeBrPort;
@@ -34,7 +34,7 @@ public class MonitoringRestAdapter {
     @Inject
     MonitoringPort monitoringPort;
     @Inject
-    Co2DataDtoMapper co2DataDtoMapper;
+    DataDtoMapper dataDtoMapper;
     @Inject
     ZonedDateTimeBrPort zonedDateTimeBrPort;
 
@@ -58,13 +58,13 @@ public class MonitoringRestAdapter {
         return monitoringPort.listAllEsp32().stream().map(esp32DtoMapper::toDto).collect(Collectors.toList());
     }
 
-    @Path("/co2data")
+    @Path("/data")
     @GET
-    public List<Co2DataDto> consultarCo2PorEnderecoData(@QueryParam("estado")@NotNull String estado,
-                                                        @QueryParam("cidade") String cidade,
-                                                        @QueryParam("bairro") String bairro,
-                                                        @QueryParam("data_inicial") @NotNull String dataInicial,
-                                                        @QueryParam("data_final")@NotNull String dataFinal){
+    public List<DataDto> consultarDataPorEnderecoData(@QueryParam("estado")@NotNull String estado,
+                                                     @QueryParam("cidade") String cidade,
+                                                     @QueryParam("bairro") String bairro,
+                                                     @QueryParam("data_inicial") @NotNull String dataInicial,
+                                                     @QueryParam("data_final")@NotNull String dataFinal){
         ZonedDateTime dataIni;
         ZonedDateTime dataFin;
         try{
@@ -73,16 +73,16 @@ public class MonitoringRestAdapter {
         }catch (Exception e){
             throw new IllegalArgumentException("Data inicial ou data final não esta em padrão valido");
         }
-        Co2DataRequestEndereco co2DataRequestEndereco = new Co2DataRequestEndereco(
+        DataRequestEndereco dataRequestEndereco = new DataRequestEndereco(
                 estado, cidade, bairro, dataIni, dataFin);
-        return monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco).stream().map(co2DataDtoMapper::co2Data2Co2DataDto)
+        return monitoringPort.consultarDataPorEnderecoData(dataRequestEndereco).stream().map(dataDtoMapper::Data2DataDto)
                 .collect(Collectors.toList());
     }
 
-    @Path("/co2data/raw")
+    @Path("/data/raw")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String consultarCo2PorEnderecoDataRawText(@QueryParam("estado")@NotNull String estado,
+    public String consultarMoisturePorEnderecoDataRawText(@QueryParam("estado")@NotNull String estado,
                                                         @QueryParam("cidade") String cidade,
                                                         @QueryParam("bairro") String bairro,
                                                         @QueryParam("data_inicial") @NotNull String dataInicial,
@@ -95,12 +95,12 @@ public class MonitoringRestAdapter {
         }catch (Exception e){
             throw new IllegalArgumentException("Data inicial ou data final não esta em padrão valido");
         }
-        Co2DataRequestEndereco co2DataRequestEndereco = new Co2DataRequestEndereco(
+        DataRequestEndereco dataRequestEndereco = new DataRequestEndereco(
                 estado, cidade, bairro, dataIni, dataFin);
         StringBuilder builder = new StringBuilder();
-        monitoringPort.consultarCo2PorEnderecoData(co2DataRequestEndereco).stream().forEach(co2Data ->  {
-            String data = String.format("%d,%s\n", co2Data.getSensorData().getCo2(), co2Data.getColeta().toLocalDateTime().toString());
-            builder.append(data);
+        monitoringPort.consultarDataPorEnderecoData(dataRequestEndereco).stream().forEach(data ->  {
+            String formatedData = String.format("%d,%s\n", data.getSensorData().getMoisture(), data.getColeta().toLocalDateTime().toString());
+            builder.append(formatedData);
         });
         return builder.toString();
     }
@@ -111,7 +111,7 @@ public class MonitoringRestAdapter {
         return monitoringPort.consultarEsp32sParaProximaManutencao().stream().map(esp32DtoMapper::toDto).collect(Collectors.toList());
     }
 
-    @Path("/co2data/arima")
+    @Path("/data/arima")
     @POST
     public ArimaForecastResponse arimaForecast(@Valid ArimaForecastRequest arima){
         ArimaParams arimaParams = new ArimaParams(arima.getNp(), arima.getNd(), arima.getNq(), arima.getSp(),

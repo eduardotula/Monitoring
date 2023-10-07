@@ -4,13 +4,13 @@ import com.workday.insights.timeseries.arima.struct.ArimaParams;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import org.junit.jupiter.api.Test;
-import unip.com.domain.model.Co2Data;
-import unip.com.inbound.adapter.dto.Co2DataRequestEndereco;
+import unip.com.domain.model.Data;
+import unip.com.inbound.adapter.dto.DataRequestEndereco;
 import unip.com.domain.model.Esp32;
-import unip.com.domain.usecase.factories.Co2DataFactory;
+import unip.com.domain.usecase.factories.DataFactory;
 import unip.com.domain.usecase.factories.Esp32Factory;
 import unip.com.inbound.adapter.dto.ArimaForecastResponse;
-import unip.com.outbound.port.Co2DataDataPort;
+import unip.com.outbound.port.DataDataPort;
 import unip.com.outbound.port.MonitoringDataPort;
 
 import javax.inject.Inject;
@@ -29,13 +29,13 @@ public class MonitoringUseCaseUN {
     @InjectMock
     MonitoringDataPort monitoringDataPort;
     @InjectMock
-    Co2DataDataPort co2DataDataPort;
+    DataDataPort dataDataPort;
     @Inject
     MonitoringUseCase monitoringUseCase;
     @Inject
     Esp32Factory esp32Factory;
     @Inject
-    Co2DataFactory co2DataFactory;
+    DataFactory dataFactory;
 
     @Test
     public void createEsp32() {
@@ -69,23 +69,23 @@ public class MonitoringUseCaseUN {
     }
 
     @Test
-    void consultarCo2PorEnderecoData() {
-        var co2DataRequestEndereco = Co2DataRequestEndereco.builder().estado("estado").dataFinal(ZonedDateTime.now()).dataInicial(ZonedDateTime.now())
+    void consultarMoisturePorEnderecoData() {
+        var moistureDataRequestEndereco = DataRequestEndereco.builder().estado("estado").dataFinal(ZonedDateTime.now()).dataInicial(ZonedDateTime.now())
                 .bairro("bairro").cidade("cidade").build();
 
-        var co21 = co2DataFactory.createCo2(2);
-        var co22 = co2DataFactory.createCo2(4);
-        co22.getSensorData().setCo2(560);
-        var co23 = co2DataFactory.createCo2(3);
-        co23.getSensorData().setCo2(800);
-        var listCo2 = new ArrayList<Co2Data>();
-        listCo2.addAll(Arrays.asList(co21, co22, co23));
+        var moisture1 = dataFactory.create(2);
+        var moisture2 = dataFactory.create(4);
+        moisture2.getSensorData().setMoisture(560);
+        var moisture3 = dataFactory.create(3);
+        moisture3.getSensorData().setMoisture(800);
+        var listMoisture = new ArrayList<Data>();
+        listMoisture.addAll(Arrays.asList(moisture1, moisture2, moisture3));
 
-        when(co2DataDataPort.buscarPorEndereco(co2DataRequestEndereco)).thenReturn(listCo2);
+        when(dataDataPort.buscarPorEndereco(moistureDataRequestEndereco)).thenReturn(listMoisture);
 
-        var listCo2R = monitoringUseCase.consultarCo2PorEnderecoData(co2DataRequestEndereco);
-        assertTrue( listCo2R.size() == 3);
-        assertTrue(listCo2R.containsAll(Arrays.asList(co21, co22, co23)));
+        var listMoistureR = monitoringUseCase.consultarDataPorEnderecoData(moistureDataRequestEndereco);
+        assertTrue( listMoistureR.size() == 3);
+        assertTrue(listMoistureR.containsAll(Arrays.asList(moisture1, moisture2, moisture3)));
     }
 
 

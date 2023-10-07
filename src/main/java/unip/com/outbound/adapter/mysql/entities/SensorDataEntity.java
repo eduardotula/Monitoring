@@ -20,17 +20,13 @@ public class SensorDataEntity {
     @Column(name = "erros")
     private String erros;
 
-    @Column(name = "co2", columnDefinition = "integer")
-    private Integer co2;
-
-    @Column(name = "tvoc", columnDefinition = "integer")
-    private Integer tvoc;
+    @Column(name = "moisture", columnDefinition = "integer")
+    private Integer moisture;
 
     @Column(name = "temperatura", columnDefinition = "decimal(5,2)")
     private Double temperatura;
 
-    @Column(name = "umidade", columnDefinition = "integer")
-    private Integer umidade;
-
+    @Column(name = "airHumidity", columnDefinition = "integer")
+    private Integer airHumidity;
 
 }

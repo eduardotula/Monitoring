@@ -3,12 +3,12 @@ package unip.com.domain.usecase;
 import com.workday.insights.timeseries.arima.Arima;
 import com.workday.insights.timeseries.arima.struct.ArimaParams;
 import com.workday.insights.timeseries.arima.struct.ForecastResult;
-import unip.com.domain.model.Co2Data;
-import unip.com.inbound.adapter.dto.Co2DataRequestEndereco;
+import unip.com.domain.model.Data;
+import unip.com.inbound.adapter.dto.DataRequestEndereco;
 import unip.com.domain.model.Esp32;
 import unip.com.inbound.adapter.dto.ArimaForecastResponse;
 import unip.com.inbound.port.MonitoringPort;
-import unip.com.outbound.port.Co2DataDataPort;
+import unip.com.outbound.port.DataDataPort;
 import unip.com.outbound.port.MonitoringDataPort;
 
 import javax.enterprise.context.RequestScoped;
@@ -23,7 +23,7 @@ import java.util.Objects;
 public class MonitoringUseCase implements MonitoringPort {
 
     @Inject
-    Co2DataDataPort co2DataDataPort;
+    DataDataPort dataDataPort;
     @Inject
     MonitoringDataPort monitoringDataPort;
 
@@ -65,19 +65,19 @@ public class MonitoringUseCase implements MonitoringPort {
     }
 
     @Override
-    public List<Co2Data> consultarCo2PorEnderecoData(Co2DataRequestEndereco co2DataRequestEndereco) {
+    public List<Data> consultarDataPorEnderecoData(DataRequestEndereco dataRequestEndereco) {
 
-        if(Objects.isNull(co2DataRequestEndereco.getCidade())  && Objects.nonNull(co2DataRequestEndereco.getBairro())){
+        if(Objects.isNull(dataRequestEndereco.getCidade())  && Objects.nonNull(dataRequestEndereco.getBairro())){
             throw new IllegalArgumentException("Não é possível realizar busca: bairro informado mas cidade não informado");
         }
 
-        List<Co2Data> co2Data = co2DataDataPort.buscarPorEndereco(co2DataRequestEndereco);
+        List<Data> data = dataDataPort.buscarPorEndereco(dataRequestEndereco);
 
-        if(Objects.isNull(co2Data) || co2Data.isEmpty()){
+        if(Objects.isNull(data) || data.isEmpty()){
             throw new IllegalArgumentException("Nenhum dado encontrado com parametros");
         }
 
-        return co2Data;
+        return data;
     }
 
     @Override

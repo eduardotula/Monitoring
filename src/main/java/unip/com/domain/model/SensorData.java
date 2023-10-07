@@ -12,9 +12,8 @@ public class SensorData {
 
     private Integer id;
     private String erros;
-    private Integer co2;
-    private Integer tvoc;
+    private Integer moisture;
     private Double temperatura;
-    private Integer umidade;
+    private Integer airHumidity;
 
 }

@@ -3,17 +3,14 @@ package unip.com.domain.model;
 
 import lombok.*;
 
-import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Co2Data {
+public class Data {
 
     private Integer id;
     private Esp32 esp32;

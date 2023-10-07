@@ -10,9 +10,9 @@ import java.time.ZonedDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "co2Data")
-@Table(name = "co2_data")
-public class Co2DataEntity {
+@Entity(name = "Data")
+@Table(name = "data")
+public class DataEntity {
 
     @Column(name = "id", columnDefinition = "INTEGER")
     @Id
@@ -20,14 +20,14 @@ public class Co2DataEntity {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_esp32", referencedColumnName = "id", foreignKey = @ForeignKey(name = "co2_data_esp32_fk"))
+    @JoinColumn(name = "id_esp32", referencedColumnName = "id", foreignKey = @ForeignKey(name = "data_esp32_fk"))
     private Esp32Entity esp32;
 
     @Column(name = "coleta")
     private ZonedDateTime coleta;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_sensor_data", referencedColumnName = "id", foreignKey = @ForeignKey(name = "co2_data_sensor_data_fk"))
+    @JoinColumn(name = "id_sensor_data", referencedColumnName = "id", foreignKey = @ForeignKey(name = "data_sensor_data_fk"))
     private SensorDataEntity sensorData;
 
 }

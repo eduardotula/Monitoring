@@ -4,12 +4,12 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import unip.com.inbound.adapter.dto.Co2DataDto;
+import unip.com.inbound.adapter.dto.DataDto;
 import unip.com.inbound.adapter.dto.Esp32ConfigParamsDto;
 import unip.com.inbound.adapter.dto.Esp32Dto;
-import unip.com.inbound.factories.Co2DataDtoFactory;
+import unip.com.inbound.factories.DataDtoFactory;
 import unip.com.inbound.factories.Esp32DtoFactory;
-import unip.com.outbound.repository.Co2DataRepository;
+import unip.com.outbound.repository.DataRepository;
 import unip.com.outbound.repository.Esp32Repository;
 
 import javax.inject.Inject;
@@ -27,17 +27,17 @@ class Esp32RestAdapterTestIT {
     @Inject
     Esp32Repository esp32Repository;
     @Inject
-    Co2DataRepository co2DataRepository;
+    DataRepository dataRepository;
 
     @Inject
-    Co2DataDtoFactory co2DataDtoFactory;
+    DataDtoFactory dataDtoFactory;
     @Inject
     Esp32DtoFactory esp32DtoFactory;
 
     @BeforeEach
     @Transactional
     public void before(){
-        co2DataRepository.deleteAll();
+        dataRepository.deleteAll();
         esp32Repository.deleteAll();
     }
 
@@ -60,24 +60,24 @@ class Esp32RestAdapterTestIT {
     }
 
     @Test
-    void createCo2DataEntaoSucesso() {
+    void createDataEntaoSucesso() {
         var fistEsp = createEsp32();
-        var co2 = co2DataDtoFactory.createCo2(Integer.parseInt(fistEsp.getIdentificador()));
+        var data = dataDtoFactory.create(Integer.parseInt(fistEsp.getIdentificador()));
          var response = given().when().contentType(MediaType.APPLICATION_JSON)
-                .body(co2)
+                .body(data)
                 .post("/esp32/data/").then();
         System.out.println(response.extract().asString());
 
-        var co2R = response.extract().as(Co2DataDto.class);
-        assertNotNull(co2R.getId());
-        assertNotNull(co2R.getSensorData());
+        var moistureR = response.extract().as(DataDto.class);
+        assertNotNull(moistureR.getId());
+        assertNotNull(moistureR.getSensorData());
     }
 
     @Test
-    void createCo2DataComIdentificadorInvalidoFalha() {
-        var co2 = co2DataDtoFactory.createCo2(1234567890);
+    void createMoistureDataComIdentificadorInvalidoFalha() {
+        var moisture = dataDtoFactory.create(1234567890);
         var response = given().when().contentType(MediaType.APPLICATION_JSON)
-                .body(co2)
+                .body(moisture)
                 .post("/esp32/data/").then();
         System.out.println(response.extract().asString());
 

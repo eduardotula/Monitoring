@@ -19,18 +19,15 @@ public class SensorDataDto {
 
     private String erros;
 
-
-    @NotNull(message = "co2 não encontrado!")
-    private Integer co2;
-
-    @NotNull(message = "tvoc não encontrado!")
-    private Integer tvoc;
+    @NotNull(message = "moisture não encontrada!")
+    private Integer moisture;
 
     @NotNull(message = "temperatura não encontrada!")
     private Double temperatura;
 
-    @NotNull(message = "umidade não encontrada!")
-    private Integer umidade;
+    @NotNull(message = "airHumidity não encontrada!")
+    private Integer airHumidity;
+
 
     @JsonSetter("erros")
     public void setErros(Object erros){

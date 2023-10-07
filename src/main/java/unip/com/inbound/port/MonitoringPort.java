@@ -1,8 +1,8 @@
 package unip.com.inbound.port;
 
 import com.workday.insights.timeseries.arima.struct.ArimaParams;
-import unip.com.domain.model.Co2Data;
-import unip.com.inbound.adapter.dto.Co2DataRequestEndereco;
+import unip.com.domain.model.Data;
+import unip.com.inbound.adapter.dto.DataRequestEndereco;
 import unip.com.domain.model.Esp32;
 import unip.com.inbound.adapter.dto.ArimaForecastResponse;
 
@@ -15,7 +15,7 @@ public interface MonitoringPort {
 
     List<Esp32> listAllEsp32();
 
-    List<Co2Data> consultarCo2PorEnderecoData(Co2DataRequestEndereco co2DataRequestEndereco);
+    List<Data> consultarDataPorEnderecoData(DataRequestEndereco dataRequestEndereco);
     List<Esp32> consultarEsp32sParaProximaManutencao();
     ArimaForecastResponse timeSeriesForecast(ArimaParams arimaParams, int tamanhoPredicao, double[] data);
 }

@@ -1,20 +1,16 @@
 package unip.com.inbound.adapter.dto;
 
-import jdk.jfr.Timestamp;
 import lombok.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Co2DataDto {
+public class DataDto {
 
     private Integer id;
 
@@ -28,6 +24,5 @@ public class Co2DataDto {
     @Valid
     private SensorDataDto sensorData;
 
-    private List<Integer> rawCo2Data;
 
 }

@@ -1,23 +1,17 @@
 package unip.com.inbound.adapter;
 
-import com.workday.insights.timeseries.arima.struct.ArimaParams;
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import unip.com.domain.model.Co2Data;
-import unip.com.domain.usecase.factories.Co2DataFactory;
-import unip.com.domain.usecase.factories.Esp32Factory;
 import unip.com.inbound.adapter.dto.ArimaForecastRequest;
 import unip.com.inbound.adapter.dto.ArimaForecastResponse;
-import unip.com.inbound.adapter.dto.Co2DataDto;
+import unip.com.inbound.adapter.dto.DataDto;
 import unip.com.inbound.adapter.dto.Esp32Dto;
-import unip.com.inbound.factories.Co2DataDtoFactory;
+import unip.com.inbound.factories.DataDtoFactory;
 import unip.com.inbound.factories.Esp32DtoFactory;
-import unip.com.outbound.port.Co2DataDataPort;
-import unip.com.outbound.port.MonitoringDataPort;
-import unip.com.outbound.repository.Co2DataRepository;
+import unip.com.outbound.repository.DataRepository;
 import unip.com.outbound.repository.Esp32ConfigRepository;
 import unip.com.outbound.repository.Esp32Repository;
 import unip.com.outbound.repository.SensorDataRepository;
@@ -28,7 +22,6 @@ import javax.ws.rs.core.MediaType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,11 +35,11 @@ class MonitoringRestAdapterTestIT {
     @Inject
     Esp32DtoFactory esp32Factory;
     @Inject
-    Co2DataDtoFactory co2DataFactory;
+    DataDtoFactory DataFactory;
     @Inject
     Esp32Repository esp32Repository;
     @Inject
-    Co2DataRepository co2DataRepository;
+    DataRepository dataRepository;
     @Inject
     Esp32ConfigRepository esp32ConfigRepository;
     @Inject
@@ -56,7 +49,7 @@ class MonitoringRestAdapterTestIT {
     @Transactional
     public void before(){
         esp32ConfigRepository.deleteAll();
-        co2DataRepository.deleteAll();
+        dataRepository.deleteAll();
         sensorDataRepository.deleteAll();
         esp32Repository.deleteAll();
     }
@@ -70,12 +63,12 @@ class MonitoringRestAdapterTestIT {
                 .then().extract().as(Esp32Dto.class);
     }
 
-    public Co2DataDto createCo2Data(Integer identificador){
-        var co2 = co2DataFactory.createCo2(identificador);
+    public DataDto createMoistureData(Integer identificador){
+        var moisture = DataFactory.create(identificador);
         return given().when().contentType(MediaType.APPLICATION_JSON)
-                .body(co2)
+                .body(moisture)
                 .post("/esp32/data/")
-                .then().extract().as(Co2DataDto.class);
+                .then().extract().as(DataDto.class);
     }
 
     @Test
@@ -146,11 +139,11 @@ class MonitoringRestAdapterTestIT {
     }
 
     @Test
-    void consultarCo2PorEnderecoDataEntaoSucesso() {
+    void consultarMoisturePorEnderecoDataEntaoSucesso() {
         var firstEsp32 = createEsp32();
 
-        createCo2Data(Integer.parseInt(firstEsp32.getIdentificador()));
-        createCo2Data(Integer.parseInt(firstEsp32.getIdentificador()));
+        createMoistureData(Integer.parseInt(firstEsp32.getIdentificador()));
+        createMoistureData(Integer.parseInt(firstEsp32.getIdentificador()));
         var dataIni = LocalDateTime.now().minusDays(10);
         var dataFin = LocalDateTime.now().plusDays(10);
 
@@ -161,23 +154,23 @@ class MonitoringRestAdapterTestIT {
                 .param("bairro", firstEsp32.getBairro())
                 .param("data_inicial", dataIni.toString())
                 .param("data_final", dataFin.toString())
-                .get("/monitoring/co2data")
+                .get("/monitoring/data")
                 .then();
 
         System.out.println(response.extract().asString());
 
-        List<Co2DataDto> esp32DtoResponse = response.extract().as(new TypeRef<List<Co2DataDto>>() {});
+        List<DataDto> esp32DtoResponse = response.extract().as(new TypeRef<List<DataDto>>() {});
         assertTrue(esp32DtoResponse.size() == 2);
 
     }
 
     @Test
-    void consultarCo2PorEnderecoDataRawTextEntaoSucesso() {
+    void consultarMoisturePorEnderecoDataRawTextEntaoSucesso() {
 
         var firstEsp32 = createEsp32();
 
-        createCo2Data(Integer.parseInt(firstEsp32.getIdentificador()));
-        createCo2Data(Integer.parseInt(firstEsp32.getIdentificador()));
+        createMoistureData(Integer.parseInt(firstEsp32.getIdentificador()));
+        createMoistureData(Integer.parseInt(firstEsp32.getIdentificador()));
         var dataIni = LocalDateTime.now().minusDays(10);
         var dataFin = LocalDateTime.now().plusDays(10);
 
@@ -188,7 +181,7 @@ class MonitoringRestAdapterTestIT {
                 .param("bairro", firstEsp32.getBairro())
                 .param("data_inicial", dataIni.toString())
                 .param("data_final", dataFin.toString())
-                .get("/monitoring/co2data")
+                .get("/monitoring/data")
                 .then();
 
         System.out.println(response.extract().asString());
@@ -217,7 +210,7 @@ class MonitoringRestAdapterTestIT {
 
         var response = given().when().contentType(MediaType.APPLICATION_JSON)
                 .body(arima)
-                .post("/monitoring/co2data/arima")
+                .post("/monitoring/data/arima")
                 .then();
         System.out.println(response.extract().asString());
         ArimaForecastResponse responseAr = response.extract().as(ArimaForecastResponse.class);

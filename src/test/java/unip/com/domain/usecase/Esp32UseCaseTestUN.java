@@ -4,9 +4,9 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import org.junit.jupiter.api.Test;
 import unip.com.domain.model.Esp32ConfigParams;
-import unip.com.domain.usecase.factories.Co2DataFactory;
+import unip.com.domain.usecase.factories.DataFactory;
 import unip.com.domain.usecase.factories.Esp32Factory;
-import unip.com.outbound.port.Co2DataDataPort;
+import unip.com.outbound.port.DataDataPort;
 import unip.com.outbound.port.MonitoringDataPort;
 
 import javax.inject.Inject;
@@ -26,9 +26,9 @@ class Esp32UseCaseTestUN {
     @Inject
     Esp32UseCase esp32UseCase;
     @InjectMock
-    Co2DataDataPort co2DataDataPort;
+    DataDataPort dataDataPort;
     @Inject
-    Co2DataFactory co2DataFactory;
+    DataFactory dataFactory;
     @Inject
     Esp32Factory esp32Factory;
 
@@ -40,14 +40,14 @@ class Esp32UseCaseTestUN {
 
     @Test
     void saveCo2Data() {
-        var co2 = co2DataFactory.createCo2(null);
+        var co2 = dataFactory.create(null);
         co2.getEsp32().setIdentificador("2646");
-        var co2R = co2DataFactory.createCo2(1);
+        var co2R = dataFactory.create(1);
         var esp32 = esp32Factory.createEsp32(2);
         esp32.setIdentificador("2646");
 
         when(monitoringDataPort.findEsp32ByIdentificador(anyString())).thenReturn(esp32);
-        when(co2DataDataPort.saveCo2Data(co2)).thenReturn(co2R);
+        when(dataDataPort.saveData(co2)).thenReturn(co2R);
 
         var co2Response = esp32UseCase.saveCo2Data(co2);
         assertNotNull(co2Response.getId());

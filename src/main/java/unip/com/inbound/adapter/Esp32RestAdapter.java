@@ -1,10 +1,9 @@
 package unip.com.inbound.adapter;
 
-import unip.com.domain.model.Co2Data;
-import unip.com.domain.model.Esp32ConfigParams;
-import unip.com.inbound.adapter.dto.Co2DataDto;
+import unip.com.domain.model.Data;
+import unip.com.inbound.adapter.dto.DataDto;
 import unip.com.inbound.adapter.dto.Esp32ConfigParamsDto;
-import unip.com.inbound.adapter.mappers.Co2DataDtoMapper;
+import unip.com.inbound.adapter.mappers.DataDtoMapper;
 import unip.com.inbound.adapter.mappers.Esp32ConfigparamsDtoMapper;
 import unip.com.inbound.port.Esp32Port;
 
@@ -25,7 +24,7 @@ public class Esp32RestAdapter {
     Esp32Port esp32Port;
 
     @Inject
-    Co2DataDtoMapper co2DataDtoMapper;
+    DataDtoMapper dataDtoMapper;
     @Inject
     Esp32ConfigparamsDtoMapper esp32ConfigparamsDtoMapper;
 
@@ -38,10 +37,10 @@ public class Esp32RestAdapter {
 
     @Path("data/")
     @POST
-    public Co2DataDto createCo2Data(@Valid Co2DataDto co2DataDto) {
-        Co2Data co2Data = co2DataDtoMapper.co2DataDto2Co2Data(co2DataDto);
-        Co2DataDto co2DataDto1 = co2DataDtoMapper.co2Data2Co2DataDto(esp32Port.saveCo2Data(co2Data));
-        return co2DataDto1;
+    public DataDto createCo2Data(@Valid DataDto dataDto) {
+        Data data = dataDtoMapper.DataDto2Data(dataDto);
+        DataDto dataDto1 = dataDtoMapper.Data2DataDto(esp32Port.saveCo2Data(data));
+        return dataDto1;
     }
 
     @Path("configParams/")
