@@ -35,10 +35,7 @@ public class Esp32 {
 
     public void generateDefaultConfigParams(){
         if(Objects.isNull(configParams)) configParams = new ArrayList<>();
-        configParams.add(Esp32ConfigParams.builder().param("ccs.mode").value("1").active(false).build());
-        configParams.add(Esp32ConfigParams.builder().param("ccs.reset").value("1").active(false).build());
         configParams.add(Esp32ConfigParams.builder().param("delayReciveLog").value("72000000").active(true).build());
-        configParams.add(Esp32ConfigParams.builder().param("delaySendData").value("36000000").active(true).build());
     }
 
 }
