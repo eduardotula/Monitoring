@@ -17,10 +17,9 @@ criado_em TIMESTAMP NOT NULL
 CREATE TABLE sensor_data(
 id SERIAL PRIMARY KEY NOT NULL,
 erros VARCHAR(256),
-co2 INT NOT NULL,
-tvoc INT NOT NULL,
+moisture INT NOT NULL,
 temperatura DECIMAL(5,2),
-umidade INT NOT NULL
+airHumidity INT NOT NULL
 );
 
 CREATE TABLE data(
