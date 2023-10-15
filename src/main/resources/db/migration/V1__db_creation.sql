@@ -23,13 +23,13 @@ temperatura DECIMAL(5,2),
 umidade INT NOT NULL
 );
 
-CREATE TABLE co2_data(
+CREATE TABLE data(
 id SERIAL PRIMARY KEY NOT NULL,
 id_esp32 INT NOT NULL,
 id_sensor_data INT NOT NULL,
 coleta TIMESTAMP NOT NULL,
-CONSTRAINT co2_data_sensor_data_fk FOREIGN KEY (id_sensor_data) REFERENCES sensor_data(id),
-CONSTRAINT co2_data_esp32_fk FOREIGN KEY (id_esp32) REFERENCES esp32(id)
+CONSTRAINT data_sensor_data_fk FOREIGN KEY (id_sensor_data) REFERENCES sensor_data(id),
+CONSTRAINT data_esp32_fk FOREIGN KEY (id_esp32) REFERENCES esp32(id)
 );
 
 CREATE TABLE esp32_config_params(
