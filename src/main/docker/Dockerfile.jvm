@@ -56,5 +56,7 @@ USER 1001
 ARG DATABASE_UR
 
 
+COPY --chown=1001 heroku.sh /deployments/heroku.sh
 
-CMD [ "/bin/bash", "-c" , "./deployments/run-java.sh" ]
+
+CMD [ "/bin/bash", "-c" , ". /deployments/heroku.sh && /deployments/run-java.sh" ]
