@@ -18,7 +18,7 @@ public class MonitoringPort {
 	private Requests request;
 
 	public MonitoringPort() {
-		this.request = new Requests("https://monitoring-esp32.herokuapp.com");
+		this.request = new Requests("https://monitoringmoisture-4d5fd27c6347.herokuapp.com");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -32,13 +32,13 @@ public class MonitoringPort {
 		if(Objects.nonNull(cidade) && !cidade.isEmpty())params.put("cidade", cidade);
 		if(Objects.nonNull(bairro) && !bairro.isEmpty())params.put("bairro", bairro);
 
-		return (List<Co2DataDto>) request.getRequest(new TypeReference<List<Co2DataDto>>() {}, params, "/monitoring/co2data");
+		return (List<Co2DataDto>) request.getRequest(new TypeReference<List<Co2DataDto>>() {}, params, "/monitoring/data");
 
 	}
 	
 	public ArimaForecastResponse getArimaPrediction(ArimaForecastRequest arimaParams)throws RequestException {
 		
-		List<ArimaForecastResponse> re = (List<ArimaForecastResponse>) request.postRequest(new TypeReference<ArimaForecastResponse>() {}, null, "/monitoring/co2data/arima", arimaParams);
+		List<ArimaForecastResponse> re = (List<ArimaForecastResponse>) request.postRequest(new TypeReference<ArimaForecastResponse>() {}, null, "/monitoring/data/arima", arimaParams);
 		if(!re.isEmpty()) return re.get(0);
 		return null;
 	}

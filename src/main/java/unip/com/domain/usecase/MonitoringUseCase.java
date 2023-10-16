@@ -35,7 +35,6 @@ public class MonitoringUseCase implements MonitoringPort {
             throw new IllegalArgumentException("Esp32 Já registrado com identificador");
         }
 
-        esp32.generateDefaultConfigParams();
         esp32.setCriadoEm(ZonedDateTime.now());
         return monitoringDataPort.save(esp32);
     }

@@ -41,7 +41,7 @@ public class MainInterface extends BaseGUI{
 		
 		JScrollPane scrollPane = new JScrollPane();
 		getContentPane().add(scrollPane, "cell 0 0,grow");
-		model = new DefaultModels(new String[] {"id", "identificador", "CO2","TVOC", "Temperatura", "Umidade"}, new boolean[] {false,false,false,false,false,false}, new Class<?>[] {Integer.class, Integer.class, Integer.class,Integer.class, Double.class, Integer.class,});
+		model = new DefaultModels(new String[] {"id", "identificador", "Umidade", "Temperatura", "Umidade Ar"}, new boolean[] {false,false,false,false,false}, new Class<?>[] {Integer.class, Integer.class,Integer.class, Double.class, Integer.class,});
 		table = new JTable();
 		table.setModel(model);
 		table.setAutoCreateRowSorter(true);
@@ -73,7 +73,7 @@ public class MainInterface extends BaseGUI{
 				List<Co2DataDto> co2List =  monitoring.listCo2ByDateAndFullAddress(dI, dF, (String)fD.comboBox.getSelectedItem(), fD.txtCidade.getText(), fD.txtBairro.getText());
 				model.removeAllRows();
 				co2List.forEach(line -> {
-					model.addRow(new Object[] {line.getId(), line.getIdentificador(), line.getSensorData().getCo2(), line.getSensorData().getTvoc(), line.getSensorData().getTemperatura(), line.getSensorData().getUmidade()});
+					model.addRow(new Object[] {line.getId(), line.getIdentificador(), line.getSensorData().getMoisture(), line.getSensorData().getTemperatura(), line.getSensorData().getUmidade()});
 				});
 			} catch (RequestException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

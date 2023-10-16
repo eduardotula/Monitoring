@@ -18,7 +18,7 @@ public class Co2DataDto {
 
     private SensorDataDto sensorData;
 
-    private List<Integer> rawCo2Data;
+    private List<Integer> co2Data;
 
     
 
@@ -55,11 +55,11 @@ public class Co2DataDto {
 	}
 
 	public List<Integer> getRawCo2Data() {
-		return rawCo2Data;
+		return co2Data;
 	}
 
 	public void setRawCo2Data(List<Integer> rawCo2Data) {
-		this.rawCo2Data = rawCo2Data;
+		this.co2Data = rawCo2Data;
 	}
 
     

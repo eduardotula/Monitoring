@@ -15,19 +15,11 @@ public class SensorDataDto {
 
     private String erros;
 
-
-    private Integer co2;
-
-    private Integer tvoc;
+    private Integer moisture;
 
     private Double temperatura;
 
-    private Integer umidade;
-
-    
-    
-
-
+    private Integer airHumidity;
 
 
 	public String getErros() {
@@ -35,38 +27,18 @@ public class SensorDataDto {
 	}
 
 
-
-
 	public void setErros(String erros) {
 		this.erros = erros;
 	}
 
 
-
-
-	public Integer getCo2() {
-		return co2;
+	public Integer getMoisture() {
+		return moisture;
 	}
-
-
-
-
-	public void setCo2(Integer co2) {
-		this.co2 = co2;
-	}
-
-
-
-
-	public Integer getTvoc() {
-		return tvoc;
-	}
-
-
 
 
 	public void setTvoc(Integer tvoc) {
-		this.tvoc = tvoc;
+		this.moisture = tvoc;
 	}
 
 
@@ -87,14 +59,14 @@ public class SensorDataDto {
 
 
 	public Integer getUmidade() {
-		return umidade;
+		return airHumidity;
 	}
 
 
 
 
 	public void setUmidade(Integer umidade) {
-		this.umidade = umidade;
+		this.airHumidity = umidade;
 	}
 
 
